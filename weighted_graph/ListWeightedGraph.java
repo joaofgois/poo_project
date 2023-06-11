@@ -25,8 +25,12 @@ public class ListWeightedGraph implements WeightedGraph {
         List<WeightedEdge> edges = adjacencylist.get(v1);
         if (edges != null){
 	        for (WeightedEdge e : edges) {
-	            if (e.v1 == v2) {
-	                return true;
+	            if (e.v2 == v2) {
+	                if(e.weight != 0) {
+	                	return true;	                	
+	                } else {
+	                	return false;
+	                }
 	            }
 	        }
         }

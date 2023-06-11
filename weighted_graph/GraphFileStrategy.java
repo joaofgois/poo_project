@@ -33,7 +33,9 @@ public class GraphFileStrategy implements CreateGraphStrategy {
 					System.out.println("Input file contains non integer token\n");
 					return null;
 				}
-				graph.addEdge(i, j, weight);
+				if (weight != 0) {
+					graph.addEdge(i, j, weight);					
+				}
 			}
 			//skip newline character
 			scanner.next();
