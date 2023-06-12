@@ -14,4 +14,6 @@ public interface WeightedGraph<V, E> {
 	public E getEdgeWeight(V v1, V v2);
 	
 	public int nrVertices();
+	
+	public void printGraph();
 }

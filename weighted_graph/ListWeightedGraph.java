@@ -16,7 +16,7 @@ public class ListWeightedGraph implements WeightedGraph<Integer, Integer> {
 		adjacencylist = new HashMap<>();
 		
 		for (int i = 0; i < vertices; i++) {
-			adjacencylist.put(i, new HashMap<Integer, Integer>());
+			this.addVertex(i);
 		}
 	}
 	
@@ -30,9 +30,10 @@ public class ListWeightedGraph implements WeightedGraph<Integer, Integer> {
 
 	@Override
 	public void addEdge(Integer v1, Integer v2, Integer value) {
-		if (areAdjacent(v1,v2)) {
+		if (! areAdjacent(v1,v2)) {
 			adjacencylist.get(v1).put(v2, value);
 			adjacencylist.get(v2).put(v1, value);
+			System.out.printf("New Edge: %-2d -> %-2d    weight:  %-2d %n", v1, v2, value);
 		}
 	}
 
@@ -59,6 +60,17 @@ public class ListWeightedGraph implements WeightedGraph<Integer, Integer> {
 	@Override
 	public int nrVertices() {
 		return adjacencylist.size();
+	}
+
+	@Override
+	public void printGraph() {
+		for (int i=0; i < this.nrVertices(); i++) {
+			for(int j = 0; j < this.nrVertices(); j++) {
+				System.out.printf("%-3d ", this.getEdgeWeight(i, j));				
+			}
+			System.out.print("\n");
+		}
+		
 	}
 	
 	

@@ -16,20 +16,24 @@ public class RandomGraphStrategy implements CreateGraphStrategy {
 	@Override
 	public ListWeightedGraph create(int vertices) {
 		ListWeightedGraph graph = new ListWeightedGraph(vertices);
-		int nrEdges = random.nextInt( ((vertices*(vertices-1))/2) - vertices) + 1;
+		//int temp = ((vertices*(vertices-1))/2) - vertices + 1;
+		int nrEdges = random.nextInt( ((vertices*(vertices-1))/2) - vertices + 1);
+		System.out.println(nrEdges);
 		int v1;
 		int v2;
 		
 		//generate possible vertices
 		List<Integer> cycle = new ArrayList<Integer>(vertices);
 		for (int i = 0; i < vertices; i++) {
-			cycle.set(i, i);
+			cycle.add(i);
 		}
 		//generate Hamilton cycle
 		Collections.shuffle(cycle);
+		System.out.println(cycle);
 		for(int i = 0; i < vertices-1; i++) {
 			graph.addEdge(cycle.get(i), cycle.get(i+1), random.nextInt(maxWeight) + 1);
 		}
+		graph.addEdge(cycle.get(vertices-1), cycle.get(0), random.nextInt(maxWeight) + 1);
 		
 		//create more random edges
 		while(nrEdges != 0) {
