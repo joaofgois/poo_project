@@ -18,8 +18,9 @@ public class GraphFileStrategy implements CreateGraphStrategy {
 
 	@Override
 	public ListWeightedGraph create(int vertices) { // throws NumberFormatException
-		ListWeightedGraph graph = new ListWeightedGraph(vertices);
+		ListWeightedGraph graph = new ListWeightedGraph();
 		int weight;
+		
 		
 		//skip first line
 		if (scanner.hasNextLine()) {

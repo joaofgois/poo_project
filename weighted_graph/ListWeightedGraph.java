@@ -1,78 +1,67 @@
 package weighted_graph;
 
-//import java.util.LinkedList;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
-public class ListWeightedGraph implements WeightedGraph {
+public class ListWeightedGraph implements WeightedGraph<Integer, Integer> {
 		
-	private int vertices;
-    private Map<Integer, List<WeightedEdge>> adjacencylist;
-    
-	public ListWeightedGraph(int vertices) {
-		this.vertices = vertices;
+    private Map<Integer, Map<Integer, Integer>> adjacencylist;
+	
+	public ListWeightedGraph() {
 		adjacencylist = new HashMap<>();
-		// initialize graph with given number of vertices
+	}
+
+	public ListWeightedGraph(int vertices) {
+		adjacencylist = new HashMap<>();
+		
 		for (int i = 0; i < vertices; i++) {
-			adjacencylist.put(i, new ArrayList<WeightedEdge>());
+			adjacencylist.put(i, new HashMap<Integer, Integer>());
 		}
 	}
 	
 	@Override
-	public boolean areAdjacent(int v1, int v2) {
-        List<WeightedEdge> edges = adjacencylist.get(v1);
-        if (edges != null){
-	        for (WeightedEdge e : edges) {
-	            if (e.v2 == v2) {
-	                if(e.weight != 0) {
-	                	return true;	                	
-	                } else {
-	                	return false;
-	                }
-	            }
-	        }
-        }
-        return false;
-    }
-	
-	@Override
-	public void addEdge(int v1, int v2, int weight) {
-		List<WeightedEdge> edges = adjacencylist.get(v1);
-		if (! this.areAdjacent(v1, v2)) {
-			edges.add(new WeightedEdge(v1, v2, weight));
+	public boolean areAdjacent(Integer v1, Integer v2) {
+		if (adjacencylist.containsKey(v1)) {
+			return adjacencylist.get(v1).containsKey(v2);
 		}
-		if (! this.areAdjacent(v2, v1)) {
-			edges.add(new WeightedEdge(v2, v1, weight));
-		}
-	}
-	
-
-	@Override
-	public int[] getAdjacency(int vertex) {
-		List<WeightedEdge> edges = adjacencylist.get(vertex);
-		int[] adjacency = new int[edges.size()];
-		if (edges != null) {
-			for (int i = 0; i < edges.size(); i++) {
-				adjacency[i] = edges.get(i).v2;
-			}
-		}
-		return adjacency;
+		else return false;
 	}
 
 	@Override
-	public int getEdgeWeight(int v1, int v2) {
-		List<WeightedEdge> edges = adjacencylist.get(v1);
-		if (edges != null) {
-			for (WeightedEdge e: edges) {
-				if(e.v2 == v2) {
-					return e.weight;
-				}
-			}
+	public void addEdge(Integer v1, Integer v2, Integer value) {
+		if (areAdjacent(v1,v2)) {
+			adjacencylist.get(v1).put(v2, value);
+			adjacencylist.get(v2).put(v1, value);
+		}
+	}
+
+	@Override
+	public Set<Integer> getAdjacency(Integer vertex) {
+		return adjacencylist.get(vertex).keySet();
+	}
+
+	@Override
+	public Integer getEdgeWeight(Integer v1, Integer v2) {
+		if (areAdjacent(v1,v2)) {
+			return adjacencylist.get(v1).get(v2);
 		}
 		return 0;
 	}
+
+
+	@Override
+	public void addVertex(Integer v1) {
+		adjacencylist.put(v1, new HashMap<Integer, Integer>());
+	}
+
+
+	@Override
+	public int nrVertices() {
+		return adjacencylist.size();
+	}
+	
+	
 	
 
 
