@@ -4,24 +4,17 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-public class ListWeightedGraph implements WeightedGraph<Integer, Integer> {
+abstract class ListWeightedGraph<T, E> implements WeightedGraph<T, E> {
 		
-    private Map<Integer, Map<Integer, Integer>> adjacencylist;
+    protected Map<T, Map<T, E>> adjacencylist;
 	
 	public ListWeightedGraph() {
 		adjacencylist = new HashMap<>();
 	}
 
-	public ListWeightedGraph(int vertices) {
-		adjacencylist = new HashMap<>();
-		
-		for (int i = 0; i < vertices; i++) {
-			this.addVertex(i);
-		}
-	}
 	
 	@Override
-	public boolean areAdjacent(Integer v1, Integer v2) {
+	public boolean areAdjacent(T v1, T v2) {
 		if (adjacencylist.containsKey(v1)) {
 			return adjacencylist.get(v1).containsKey(v2);
 		}
@@ -29,7 +22,7 @@ public class ListWeightedGraph implements WeightedGraph<Integer, Integer> {
 	}
 
 	@Override
-	public void addEdge(Integer v1, Integer v2, Integer value) {
+	public void addEdge(T v1, T v2, E value) {
 		if (! areAdjacent(v1,v2)) {
 			adjacencylist.get(v1).put(v2, value);
 			adjacencylist.get(v2).put(v1, value);
@@ -38,22 +31,22 @@ public class ListWeightedGraph implements WeightedGraph<Integer, Integer> {
 	}
 
 	@Override
-	public Set<Integer> getAdjacency(Integer vertex) {
+	public Set<T> getAdjacency(T vertex) {
 		return adjacencylist.get(vertex).keySet();
 	}
 
 	@Override
-	public Integer getEdgeWeight(Integer v1, Integer v2) {
+	public E getEdgeWeight(T v1, T v2) {
 		if (areAdjacent(v1,v2)) {
 			return adjacencylist.get(v1).get(v2);
 		}
-		return 0;
+		return null;
 	}
 
 
 	@Override
-	public void addVertex(Integer v1) {
-		adjacencylist.put(v1, new HashMap<Integer, Integer>());
+	public void addVertex(T v1) {
+		adjacencylist.put(v1, new HashMap<T, E>());
 	}
 
 
@@ -62,20 +55,5 @@ public class ListWeightedGraph implements WeightedGraph<Integer, Integer> {
 		return adjacencylist.size();
 	}
 
-	@Override
-	public void printGraph() {
-		for (int i=0; i < this.nrVertices(); i++) {
-			for(int j = 0; j < this.nrVertices(); j++) {
-				System.out.printf("%-3d ", this.getEdgeWeight(i, j));				
-			}
-			System.out.print("\n");
-		}
-		
-	}
-	
-	
-	
 
-
-	
 }

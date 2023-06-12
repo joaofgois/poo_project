@@ -1,5 +1,6 @@
 package weighted_graph;
 
+import expRandom.*;
 import java.io.*;
 import java.util.Scanner;
 
@@ -33,6 +34,11 @@ public class main_test {
 		
 		grafo = context.createGraph(5);
 		grafo.printGraph();
+		
+		ExpRandom rand = ExpRandom.getInstance();
+		System.out.println(rand.getRand(10));
+		System.out.println(rand.nextInt(10));
+		System.out.println(rand.nextDouble(10));
 	}
 
 }

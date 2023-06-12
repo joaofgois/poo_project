@@ -15,7 +15,7 @@ public class GraphCreator {
 		this.strategy = strategy;
 	}
 
-	public ListWeightedGraph createGraph(int vertices) {
+	public IntListWeightedGraph createGraph(int vertices) {
 		return (strategy.create(vertices));
 	}
 }

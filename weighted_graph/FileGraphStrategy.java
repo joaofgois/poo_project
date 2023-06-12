@@ -12,8 +12,8 @@ public class FileGraphStrategy implements CreateGraphStrategy {
 	}
 
 	@Override
-	public ListWeightedGraph create(int vertices) { // throws NumberFormatException
-		ListWeightedGraph graph = new ListWeightedGraph(vertices);
+	public IntListWeightedGraph create(int vertices) { // throws NumberFormatException
+		IntListWeightedGraph graph = new IntListWeightedGraph(vertices);
 		int weight;
 		String str;
 		for (int i = 0; i < vertices; i++) {

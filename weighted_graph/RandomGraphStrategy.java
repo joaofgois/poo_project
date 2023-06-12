@@ -14,8 +14,8 @@ public class RandomGraphStrategy implements CreateGraphStrategy {
 	}
 
 	@Override
-	public ListWeightedGraph create(int vertices) {
-		ListWeightedGraph graph = new ListWeightedGraph(vertices);
+	public IntListWeightedGraph create(int vertices) {
+		IntListWeightedGraph graph = new IntListWeightedGraph(vertices);
 		//int temp = ((vertices*(vertices-1))/2) - vertices + 1;
 		int nrEdges = random.nextInt( ((vertices*(vertices-1))/2) - vertices + 1);
 		System.out.println(nrEdges);
