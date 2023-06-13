@@ -3,30 +3,29 @@ package sed;
 import java.util.Comparator;
 import java.util.PriorityQueue;
 
-
-
 // Custom comparator class
 class EventComparator implements Comparator<Event> {
     @Override
     public int compare(Event event1, Event event2) {
-        return Double.compare(event1.getTimestamp(), event2.getTimestamp());
+        return Float.compare(event1.time, event2.time);
     }
 }
 
 public class PEC {
-    public static PriorityQueue<Event> PriorityQueue() {
+    private PriorityQueue<Event> pec;
+
+    public PEC() {
         // Create a Priority Queue
-        PriorityQueue<Event> pq = new PriorityQueue<>(new EventComparator());
-        return pq;
+        pec = new PriorityQueue<>(new EventComparator());
     }
 
-    public void addEvPEC(Event event, PriorityQueue<Event> pq) {
+    public void addEvPEC(Event event) {
         // Add items to the Priority Queue (ENQUEUE)
-        pq.add(event);
+        pec.add(event);
     }
 
-    public Event nextEvPEC(PriorityQueue<Event> pq) {
+    public Event nextEvPEC() {
         // Remove items from the Priority Queue (DEQUEUE)
-        return pq.poll();
+        return pec.poll();
     }
 }

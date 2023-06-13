@@ -46,7 +46,10 @@ public class AntColony<T> implements IAntColony<T> {
 	@Override
 	public void setPheromone(T v1, T v2, float phero) {
 		Edge<T> edge = getEdge(v1, v2);
-		edges.put(edge , edges.get(edge) + phero);
+		float i = 0;
+		if(edges.put(edge , edges.get(edge) + phero)<0){
+			edges.put(edge , i);
+		}
 	}
 
 	@Override

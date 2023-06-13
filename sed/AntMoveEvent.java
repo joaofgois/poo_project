@@ -9,14 +9,19 @@ import antColony.IAntColony;
 import weighted_graph.WeightedGraph;
 import expRandom.ExtRandom;
 
+/**
+ * Event that moves the ant from node to node.<p>
+ * <strong>T</strong> is the data type for the graph vertices labels.
+ */
 public class AntMoveEvent<T> extends Event{
 
     private T antNext; // proxima posicao/posicao atual depende se estamos antes ou de
     private int antId;
     private IAntColony<T> antcolony;
-    protected float alpha,beta,delta, pheroLevel;
-    private WeightedGraph<T, Integer> graph;
+    //protected float alpha,beta,delta, pheroLevel;
+    //private WeightedGraph<T, Integer> graph;
     private ExtRandom rand;
+    private TspACOSimulation<T, Integer> parent;
 
 
     //constructor
@@ -34,7 +39,9 @@ public class AntMoveEvent<T> extends Event{
      */
     @Override
     public void simulateEvent() {
-        
+        //parent.AntMoveEvCounter ++
+
+
         //move to next location
         antcolony.addAntPath(antId, antNext);
 
@@ -49,17 +56,19 @@ public class AntMoveEvent<T> extends Event{
             //calculate total path weight
             for(int i=0; i<antcolony.getAntPath(antId).size()-1;i++){
                  
-                w += graph.getEdgeWeight(path.get(i),path.get(i+1));
+                w += parent.graph.getEdgeWeight(path.get(i),path.get(i+1));
             }
 
             for(int i=0; i<antcolony.getAntPath(antId).size()-1;i++){
 
-                antcolony.setPheromone(path.get(i),path.get(i+1),(pheroLevel*w)/miu); // miu= peso do grafo, por fazer....!!!!!!!!!!
-                //falta enviar para o pec o coiso da evaporacao
+                antcolony.setPheromone(path.get(i),path.get(i+1),(parent.pheroLevel*w)/miu); // miu= peso do grafo, por fazer....!!!!!!!!!!
+                //falta enviar para o pec o coiso da evaporacao-------------------------------------
+                
             }
             antcolony.removeLastAntPath(antId);
             
             //falta funcao para mandar path e peso para o ACOSIMULATOR.storeCycle()
+            parent.storeCycle(new ArrayList<>(antcolony.getAntPath(antId)), w);
 
             // reset formiga
             
@@ -119,8 +128,6 @@ public class AntMoveEvent<T> extends Event{
         if (possible_temp.size() == 0){
             possible_temp = graph.getAdjacency(antcolony.getAntPosition(antId));
             possible_temp.remove(antcolony.getAntPosition(antId));
-
-            //FALTA CASO TENHA QUE REMOVER CICLOS!!!!!!!!!!!!!!!!!!!!!
         }
         List<T> possible = new ArrayList<T>();
         possible.addAll(possible_temp);
