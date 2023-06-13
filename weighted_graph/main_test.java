@@ -35,7 +35,7 @@ public class main_test {
 		grafo = context.createGraph(5);
 		grafo.printGraph();
 		
-		ExpRandom rand = ExpRandom.getInstance();
+		ExtRandom rand = ExtRandom.getInstance();
 		System.out.println(rand.nextExp(10));
 		System.out.println(rand.nextInt(10));
 		System.out.println(rand.nextDouble(10));

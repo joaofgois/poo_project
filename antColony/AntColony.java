@@ -1,6 +1,7 @@
 package antColony;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.List;
 
 public class AntColony<T> implements IAntColony<T> {
 
@@ -54,6 +55,11 @@ public class AntColony<T> implements IAntColony<T> {
 	}
 
 	@Override
+	public List<T> getAntPath(int antId) {
+		return ants.get(antId).path;
+	}
+
+	@Override
 	public void resetAnt(int antId) {
 		ants.get(antId).path.clear();
 	}
@@ -61,6 +67,7 @@ public class AntColony<T> implements IAntColony<T> {
 	@Override
 	public void addAntPath(int antId, T v1) {
 		ants.get(antId).path.addLast(v1);
+		ants.get(antId).position = v1;
 	}
 
 	
@@ -87,6 +94,11 @@ public class AntColony<T> implements IAntColony<T> {
 	@Override
 	public int colonySize() {
 		return ants.size();
+	}
+
+	@Override
+	public T colonyNest() {
+		return nest;
 	}
 
 
