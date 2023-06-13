@@ -62,6 +62,8 @@ public class AntColony<T> implements IAntColony<T> {
 	@Override
 	public void resetAnt(int antId) {
 		ants.get(antId).path.clear();
+		ants.get(antId).position = nest;
+		
 	}
 
 	@Override
@@ -74,6 +76,7 @@ public class AntColony<T> implements IAntColony<T> {
 	@Override
 	public void removeLastAntPath(int antId) {
 		ants.get(antId).path.removeLast();
+		ants.get(antId).position = ants.get(antId).path.getLast();
 	}
 
 	@Override

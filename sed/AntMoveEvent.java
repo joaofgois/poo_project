@@ -14,15 +14,17 @@ public class AntMoveEvent<T> extends Event{
     private T antNext; // proxima posicao/posicao atual depende se estamos antes ou de
     private int antId;
     private IAntColony<T> antcolony;
-    protected float alpha,beta,delta;
+    protected float alpha,beta,delta, pheroLevel;
     private WeightedGraph<T, Integer> graph;
-    private float PheroLevel;
     private ExtRandom rand;
 
 
     //constructor
-    public AntMoveEvent(){
+    public AntMoveEvent(float time, IAntColony<T> antcolony, int antId){
+        super(time);
         rand = ExtRandom.getInstance();
+        this.antcolony = antcolony;
+        this.antId = antId;
     }
 
     
@@ -33,37 +35,61 @@ public class AntMoveEvent<T> extends Event{
     @Override
     public void simulateEvent() {
         
-        String hamilton_cycle;
         //move to next location
         antcolony.addAntPath(antId, antNext);
 
         //check if Hamilton Cycle is complete---------------PODEMOS POR ISTO FORA DA CLASSE, TALVEZ COM O STRATEGY PATTERN (ou nao)
         if (checkHamiltonCycle()){
             
-            //simulacao
-            
+            //simulacao e phero
+            int w = 0;
+            int miu=0;
+            List<T> path = new ArrayList<>(antcolony.getAntPath(antId));
+
+            //calculate total path weight
+            for(int i=0; i<antcolony.getAntPath(antId).size()-1;i++){
+                 
+                w += graph.getEdgeWeight(path.get(i),path.get(i+1));
+            }
+
+            for(int i=0; i<antcolony.getAntPath(antId).size()-1;i++){
+
+                antcolony.setPheromone(path.get(i),path.get(i+1),(pheroLevel*w)/miu); // miu= peso do grafo, por fazer....!!!!!!!!!!
+                //falta enviar para o pec o coiso da evaporacao
+            }
             antcolony.removeLastAntPath(antId);
             
-            for(int i=0; ;){
+            //falta funcao para mandar path e peso para o ACOSIMULATOR.storeCycle()
 
+            // reset formiga
             
-            }
+            antcolony.resetAnt(antId);
+            antcolony.addAntPath(antId, antcolony.getAntPosition(antId));
+            antNext = nextAntMove();
+            //add new event to PEC 
 
-            //phero
-            for (iterable_type iterable_element : iterable) {
-                
-            }
-
-            //formiga
-            
+            //falta pec.adddEvPEC(new AntMoveEvent(time + rand.nextExp( delta * graph.getEdgeWeight( antcolony.getAntPosition(antId), antNext) )));
 
         }
         else{
             //choose next location
             antNext = nextAntMove();
+            T aux;
+            //if ant has already visited the location, it must revert back
+            if (antcolony.getAntPath(antId).contains(antNext)){
+                while(true){
+                    aux = antcolony.getAntPosition(antId);
+                    if (antNext == aux){
+                        antcolony.removeLastAntPath(antId);
+                        break;
+                    }
+                    antcolony.removeLastAntPath(antId);
+                    aux = antcolony.getAntPosition(antId);
+                }
+            }
             //add new event to PEC 
 
-            // pec.adddEvPEC(new AntMoveEvent(time + rand.nextExp( delta * graph.getEdgeWeight( antcolony.getAntPosition(antId), antNext) )));  
+            //falta pec.adddEvPEC(new AntMoveEvent(time + rand.nextExp( delta * graph.getEdgeWeight( antcolony.getAntPosition(antId), antNext) )));  
             
         }
         
@@ -71,7 +97,7 @@ public class AntMoveEvent<T> extends Event{
     }
 
     private boolean checkHamiltonCycle(){
-        if (antcolony.getAntPosition(antId) == antcolony.colonyNest() && antcolony.getAntPath(antId).size() > 1){
+        if (antcolony.getAntPosition(antId) == antcolony.colonyNest() && antcolony.getAntPath(antId).size() > graph.nrVertices()-1){
             return true;
         }
         return false;
@@ -89,10 +115,12 @@ public class AntMoveEvent<T> extends Event{
         //remove visited locations from possible next locations
         possible_temp.removeAll(path);
         
-        //if there are no non-visited locations, must choose a visited onde instead
+        //if there arent non-visited locations, must choose a visited node instead
         if (possible_temp.size() == 0){
             possible_temp = graph.getAdjacency(antcolony.getAntPosition(antId));
             possible_temp.remove(antcolony.getAntPosition(antId));
+
+            //FALTA CASO TENHA QUE REMOVER CICLOS!!!!!!!!!!!!!!!!!!!!!
         }
         List<T> possible = new ArrayList<T>();
         possible.addAll(possible_temp);
