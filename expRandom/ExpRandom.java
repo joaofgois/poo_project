@@ -3,6 +3,10 @@ package expRandom;
 import java.util.Random;
 
 //Thread Safe Singleton
+/**
+ * @author joaop
+ *  Random number generator using with a Thread Safe Singleton pattern
+ */
 public class ExpRandom extends Random{
 	/**
 	 * 
@@ -15,6 +19,13 @@ public class ExpRandom extends Random{
 		//random = new Random();
 	}
 	
+	/**
+	 * ola<p>
+	 * ola
+	 * ola
+	 * @return ada
+	 * @author deee
+	 */
 	public static synchronized ExpRandom getInstance() {
 		if (instance == null) {
 			instance = new ExpRandom();
