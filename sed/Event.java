@@ -1,9 +1,9 @@
 package sed;
 
-public abstract class Event implements Comparable<Event>{
+public abstract class Event {//implements Comparable<Event>{
     protected float time;
     
-    @Override
+    //@Override
     public int compareTo(Event arg0) {
         if (this.time == arg0.time){
             return 0;
@@ -14,7 +14,7 @@ public abstract class Event implements Comparable<Event>{
         return -1;
     }
 
-    
+
 
     public Event(float time){
         this.time = time;

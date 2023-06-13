@@ -39,6 +39,9 @@ public class main_test {
 		System.out.println(rand.nextExp(10));
 		System.out.println(rand.nextInt(10));
 		System.out.println(rand.nextDouble(10));
+		System.out.println(grafo.getAdjacency(0));
+		System.out.println(grafo.getAdjacency(0).contains(context));
+		
 	}
 
 }
