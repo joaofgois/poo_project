@@ -5,5 +5,5 @@
  * @author xxx
  *
  */
-module Formiguinhas {
+module poo_project {
 }

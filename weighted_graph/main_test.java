@@ -4,6 +4,9 @@ import expRandom.*;
 import java.io.*;
 import java.util.Scanner;
 
+import antColony.*;
+import sed.*;
+
 public class main_test {
 
 	public static void main(String[] args) {
@@ -32,16 +35,32 @@ public class main_test {
 		context.setStrategy(generate);
 		context.setStrategy(readfile);
 		
-		grafo = context.createGraph(5);
+		grafo = context.createGraph(4);
 		grafo.printGraph();
 		
-		ExtRandom rand = ExtRandom.getInstance();
-		System.out.println(rand.nextExp(10));
-		System.out.println(rand.nextInt(10));
-		System.out.println(rand.nextDouble(10));
-		System.out.println(grafo.getAdjacency(0));
-		System.out.println(grafo.getAdjacency(0).contains(context));
+		//ExtRandom rand = ExtRandom.getInstance();
+		//System.out.println(rand.nextExp(10));
+		//System.out.println(rand.nextInt(10));
+		//System.out.println(rand.nextDouble(10));
+		//float[] nodes = new float[]{(float) 0.5, (float) 0.4, (float) 0.1};
+		//System.out.println(rand.chooseRand(nodes));
 		
+		
+		IAntColony<Integer> antcolony = new AntColony<Integer>(0);
+		System.out.println("Colony nest: " + antcolony.colonyNest());
+		
+		antcolony.addAnt(0);
+
+		System.out.println();
+		
+		TspACOSimulation<Integer, Integer> parent = new TspACOSimulation<Integer, Integer>(grafo, 20, 1, (float) 1.0, (float)1.0, (float)0.2, (float)2.0, (float)10.0, (float)0.5);
+		
+		//Event ev1 = new AntMoveEvent<Integer>(5, parent.simulator, antcolony, 0, 0, parent);
+		antcolony.setPheromone(1, 0, 2);
+		Event ev2 = new PheroEvent<Integer>(3, parent.simulator, antcolony, parent, 0, 1);
+		
+		parent.simulator.getPEC().addEvPEC(ev2);
+		parent.simulator.simulate();
 	}
 
 }

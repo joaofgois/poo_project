@@ -12,7 +12,7 @@ class EventComparator implements Comparator<Event> {
 }
 
 public class PEC {
-    private PriorityQueue<Event> pec;
+    public PriorityQueue<Event> pec;
 
     public PEC() {
         // Create a Priority Queue

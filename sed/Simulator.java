@@ -4,18 +4,31 @@ public class Simulator {
     private Event currentEvent;
     private float simulationTime;
     private float currentTime;
-    protected PEC pec;
+    private PEC pec;
 
     public Simulator(float simulationTime){
+    	this.pec = new PEC();
+        this.simulationTime = simulationTime;
+        this.currentTime = 0;
+
+    }
+    
+    public Simulator(PEC pec, float simulationTime){
+    	this.pec = pec;
         this.simulationTime = simulationTime;
         this.currentTime = 0;
 
     }
     
     public void simulate(){
+    	if (currentEvent == null) {
+    		currentEvent = pec.nextEvPEC();
+    		if (currentEvent == null) {
+    			return;
+    		}
+		}
         while(currentTime < simulationTime){
-            
-            currentEvent.simulateEvent();
+        	currentEvent.simulateEvent();
             
             currentEvent = pec.nextEvPEC();
             if (currentEvent == null){
@@ -24,5 +37,13 @@ public class Simulator {
             }
             currentTime = currentEvent.time;
         }
+    }
+    
+    public PEC getPEC() {
+    	return pec;
+    }
+    
+    public float getSimTime() {
+    	return simulationTime;
     }
 }

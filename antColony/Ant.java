@@ -8,6 +8,8 @@ public class Ant<T> {
 
     public Ant(T position){
         this.position = position;
+        this.path = new LinkedList<T>();
+        this.path.addLast(position);
     }
 
 }

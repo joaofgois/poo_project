@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface IAntColony<T> {
     public float getPheromone(T v1,T v2);
-    public void setPheromone(T v1, T v2, float phero);
+    public float setPheromone(T v1, T v2, float phero);
     public T getAntPosition(int antId);
     public List<T> getAntPath(int antId);
     public void resetAnt(int antId);

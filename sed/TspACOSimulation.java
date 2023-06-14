@@ -30,8 +30,20 @@ public class TspACOSimulation<T, E> {
     protected float alpha,beta,delta,pheroLevel,eta,rho;
     protected WeightedGraph<T,E> graph;
     protected float graphWeight; //falta isto
-    protected Simulator simulator;
+    public Simulator simulator;
 
+    /**
+     * 
+     * @param graph
+     * @param simtime
+     * @param nr_stored_cycles
+     * @param alpha
+     * @param beta
+     * @param delta
+     * @param pheroLevel
+     * @param eta
+     * @param rho
+     */
     public TspACOSimulation(WeightedGraph<T,E> graph, float simtime, int nr_stored_cycles, float alpha, float beta, float delta, float pheroLevel, float eta, float rho){
         this.graph = graph;
         this.alpha = alpha;
@@ -46,10 +58,10 @@ public class TspACOSimulation<T, E> {
     public void storeCycle(ArrayList<T> cycle, E cycle_weight){
         //ArrayList1.equals(ArrayList2) == true
         Cycle<T,E> hamiCycle = new Cycle<T,E>(cycle, cycle_weight);
-        for (int i=0; i<bestCycles.size(); i++){
+        //for (int i=0; i<bestCycles.size(); i++){
             //if(bestCycles.get(i).cycle.equals(cycle)){
                 
             //}
-        }
+       // }
     }
 }

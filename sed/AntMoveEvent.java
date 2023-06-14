@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Set;
 
 import antColony.IAntColony;
-import weighted_graph.WeightedGraph;
 import expRandom.ExtRandom;
 
 /**
@@ -22,22 +21,33 @@ public class AntMoveEvent<T> extends Event{
     //private WeightedGraph<T, Integer> graph;
     private ExtRandom rand;
     private TspACOSimulation<T, Integer> parent;
+    private Simulator simulator;
 
 
     //constructor
-    public AntMoveEvent(float time, ExtRandom random, IAntColony<T> antcolony, int antId, T antNext, TspACOSimulation<T,Integer> parent){
+    /**
+     * 
+     * @param time
+     * @param simulator
+     * @param antcolony
+     * @param antId
+     * @param antNext
+     * @param parent
+     */
+    public AntMoveEvent(float time, Simulator simulator, IAntColony<T> antcolony, int antId, T antNext, TspACOSimulation<T,Integer> parent){
         super(time);
         rand = ExtRandom.getInstance();
         this.antcolony = antcolony;
         this.antId = antId;
         this.antNext = antNext;
         this.parent = parent;
+        this.simulator = simulator;
     }
 
     
 
     /**
-     * Take the necessay actions to simulate the Event
+     * Take the necessary actions to simulate the Event
      */
     @Override
     public void simulateEvent() {
@@ -47,7 +57,7 @@ public class AntMoveEvent<T> extends Event{
         //move to next location
         antcolony.addAntPath(antId, antNext);
 
-        //check if Hamilton Cycle is complete---------------PODEMOS POR ISTO FORA DA CLASSE, TALVEZ COM O STRATEGY PATTERN (ou nao)
+        //check if Hamilton Cycle is complete
         if (checkHamiltonCycle()){
             
             //simulacao e phero
@@ -57,14 +67,15 @@ public class AntMoveEvent<T> extends Event{
 
             //calculate total path weight
             for(int i=0; i<antcolony.getAntPath(antId).size()-1;i++){
-                 
                 w += parent.graph.getEdgeWeight(path.get(i),path.get(i+1));
             }
 
             for(int i=0; i<antcolony.getAntPath(antId).size()-1;i++){
-
-                antcolony.setPheromone(path.get(i),path.get(i+1),(parent.pheroLevel*w)/miu); // miu= peso do grafo, por fazer....!!!!!!!!!!
-                //falta enviar para o pec o coiso da evaporacao-------------------------------------
+            	//set pheromone value
+                if (antcolony.setPheromone(path.get(i),path.get(i+1),(parent.pheroLevel*w)/miu) == 0) {// miu= peso do grafo, por fazer....!!!!!!!!!!
+                	//create new evaporation event
+                	simulator.getPEC().addEvPEC(new PheroEvent<T>((float) (time + rand.nextExp(parent.eta)), parent.simulator, antcolony, parent, path.get(i), path.get(i+1)));
+                }
                 
             }
             antcolony.removeLastAntPath(antId);
@@ -76,34 +87,29 @@ public class AntMoveEvent<T> extends Event{
             
             antcolony.resetAnt(antId);
             antcolony.addAntPath(antId, antcolony.getAntPosition(antId));
-            antNext = nextAntMove();
-            //add new event to PEC 
-
-            //falta pec.adddEvPEC(new AntMoveEvent(time + rand.nextExp( delta * graph.getEdgeWeight( antcolony.getAntPosition(antId), antNext) )));
-
         }
-        else{
-            //choose next location
-            antNext = nextAntMove();
-            T aux;
-            //if ant has already visited the location, it must revert back
-            if (antcolony.getAntPath(antId).contains(antNext)){
-                while(true){
-                    aux = antcolony.getAntPosition(antId);
-                    if (antNext == aux){
-                        antcolony.removeLastAntPath(antId);
-                        break;
-                    }
-                    antcolony.removeLastAntPath(antId);
-                    aux = antcolony.getAntPosition(antId);
-                }
-            }
-            //add new event to PEC 
-
-            //falta pec.adddEvPEC(new AntMoveEvent(time + rand.nextExp( delta * graph.getEdgeWeight( antcolony.getAntPosition(antId), antNext) )));  
-            
+    
+        //choose next location
+        antNext = nextAntMove();
+        T aux;
+        //if ant has already visited the location, it must revert back
+        if (antcolony.getAntPath(antId).contains(antNext)){
+        	if(antNext != antcolony.colonyNest() || antcolony.getAntPath(antId).size() != parent.graph.nrVertices()){	
+        		while(true){
+        			aux = antcolony.getAntPosition(antId);
+        			if (antNext == aux){
+        				antcolony.removeLastAntPath(antId);
+        				break;
+        			}
+        			antcolony.removeLastAntPath(antId);
+        			aux = antcolony.getAntPosition(antId);
+        		}
+        	}
         }
         
+        //add new event to PEC 
+        this.time += rand.nextExp( parent.delta * parent.graph.getEdgeWeight( antcolony.getAntPosition(antId), antNext));
+        parent.simulator.getPEC().addEvPEC(this);  
 
     }
 
@@ -122,8 +128,9 @@ public class AntMoveEvent<T> extends Event{
         List<T> temp = antcolony.getAntPath(antId);
         Set<T> path = new HashSet<T>(temp);
         //get possible next locations
-        Set<T> possible_temp = parent.graph.getAdjacency(antcolony.getAntPosition(antId));
+        Set<T> adjacent = parent.graph.getAdjacency(antcolony.getAntPosition(antId));
         //remove visited locations from possible next locations
+        Set<T> possible_temp = new HashSet<T>(adjacent);
         possible_temp.removeAll(path);
         
         //if there arent non-visited locations, must choose a visited node instead

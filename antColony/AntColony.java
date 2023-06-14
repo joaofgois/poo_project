@@ -26,13 +26,12 @@ public class AntColony<T> implements IAntColony<T> {
 	}
 
 	private Edge<T> getEdge(T v1, T v2){
-		float i = 0;
 		Edge<T> edge = new Edge<T>(v1, v2);
 		if (edges.containsKey(edge)){
 			return edge;
 		}
 		else {
-			edges.put(edge, i);
+			edges.put(edge, (float) 0);
 			return edge;
 		}
 	}
@@ -44,12 +43,16 @@ public class AntColony<T> implements IAntColony<T> {
 	}
 
 	@Override
-	public void setPheromone(T v1, T v2, float phero) {
+	public float setPheromone(T v1, T v2, float phero) {
 		Edge<T> edge = getEdge(v1, v2);
-		float i = 0;
-		if(edges.put(edge , edges.get(edge) + phero)<0){
-			edges.put(edge , i);
+		float newPhero = edges.get(edge) + phero;
+		if( newPhero < 0){
+			edges.put(edge , (float) 0);
 		}
+		else {
+			edges.put(edge , newPhero);
+		}
+		return edges.get(edge);
 	}
 
 	@Override
@@ -65,21 +68,29 @@ public class AntColony<T> implements IAntColony<T> {
 	@Override
 	public void resetAnt(int antId) {
 		ants.get(antId).path.clear();
-		ants.get(antId).position = nest;
-		
+		this.addAntPath(antId, nest);		
 	}
 
 	@Override
 	public void addAntPath(int antId, T v1) {
-		ants.get(antId).path.addLast(v1);
-		ants.get(antId).position = v1;
+		if (!ants.get(antId).path.isEmpty()) {
+			if (ants.get(antId).path.getLast() != v1) {
+				ants.get(antId).path.addLast(v1);
+			}			
+		}
+		else {
+			ants.get(antId).path.add(v1);
+		}
+		ants.get(antId).position = v1;			
 	}
 
 	
 	@Override
 	public void removeLastAntPath(int antId) {
-		ants.get(antId).path.removeLast();
-		ants.get(antId).position = ants.get(antId).path.getLast();
+		if (ants.get(antId).path.size() > 1) {
+			ants.get(antId).path.removeLast();
+			ants.get(antId).position = ants.get(antId).path.getLast();			
+		}
 	}
 
 	@Override
@@ -92,6 +103,7 @@ public class AntColony<T> implements IAntColony<T> {
 	public void addAnt(int antId) {
 		if (! ants.containsKey(antId)){
 			ants.put(antId, new Ant<T>(nest));
+			this.addAntPath(antId, nest);
 		} else{
 			System.out.println("Tried to add Ant that already exists in colony.");
 		}

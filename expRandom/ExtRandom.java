@@ -31,8 +31,9 @@ public class ExtRandom extends Random{
 		return instance;
 	}
 
-	public double nextExp(double lambda) {
-		return Math.log(1-this.nextDouble())/(-lambda);
+	public double nextExp(double m) {
+		return  -m*Math.log(1.0-this.nextDouble());
+
 	}
 
 	/**
