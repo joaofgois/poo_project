@@ -47,9 +47,9 @@ public class TspACOSimulation<T, E> {
         //ArrayList1.equals(ArrayList2) == true
         Cycle<T,E> hamiCycle = new Cycle<T,E>(cycle, cycle_weight);
         for (int i=0; i<bestCycles.size(); i++){
-            if(bestCycles.get(i).cycle.equals(cycle)){
+            //if(bestCycles.get(i).cycle.equals(cycle)){
                 
-            }
+            //}
         }
     }
 }

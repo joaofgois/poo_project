@@ -25,11 +25,13 @@ public class AntMoveEvent<T> extends Event{
 
 
     //constructor
-    public AntMoveEvent(float time, IAntColony<T> antcolony, int antId){
+    public AntMoveEvent(float time, ExtRandom random, IAntColony<T> antcolony, int antId, T antNext, TspACOSimulation<T,Integer> parent){
         super(time);
         rand = ExtRandom.getInstance();
         this.antcolony = antcolony;
         this.antId = antId;
+        this.antNext = antNext;
+        this.parent = parent;
     }
 
     
@@ -106,7 +108,7 @@ public class AntMoveEvent<T> extends Event{
     }
 
     private boolean checkHamiltonCycle(){
-        if (antcolony.getAntPosition(antId) == antcolony.colonyNest() && antcolony.getAntPath(antId).size() > graph.nrVertices()-1){
+        if (antcolony.getAntPosition(antId) == antcolony.colonyNest() && antcolony.getAntPath(antId).size() > parent.graph.nrVertices()-1){
             return true;
         }
         return false;
@@ -120,13 +122,13 @@ public class AntMoveEvent<T> extends Event{
         List<T> temp = antcolony.getAntPath(antId);
         Set<T> path = new HashSet<T>(temp);
         //get possible next locations
-        Set<T> possible_temp = graph.getAdjacency(antcolony.getAntPosition(antId));
+        Set<T> possible_temp = parent.graph.getAdjacency(antcolony.getAntPosition(antId));
         //remove visited locations from possible next locations
         possible_temp.removeAll(path);
         
         //if there arent non-visited locations, must choose a visited node instead
         if (possible_temp.size() == 0){
-            possible_temp = graph.getAdjacency(antcolony.getAntPosition(antId));
+            possible_temp = parent.graph.getAdjacency(antcolony.getAntPosition(antId));
             possible_temp.remove(antcolony.getAntPosition(antId));
         }
         List<T> possible = new ArrayList<T>();
@@ -154,7 +156,7 @@ public class AntMoveEvent<T> extends Event{
 
     private float calculateProb(T v2){
        
-       return (alpha+ antcolony.getPheromone(antcolony.getAntPosition(antId),v2) )/(beta + graph.getEdgeWeight(antcolony.getAntPosition(antId) ,v2));
+       return (parent.alpha+ antcolony.getPheromone(antcolony.getAntPosition(antId),v2) )/(parent.beta + parent.graph.getEdgeWeight(antcolony.getAntPosition(antId) ,v2));
     }
 
 

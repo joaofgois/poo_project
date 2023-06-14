@@ -14,7 +14,7 @@ public class PheroEvent<T> extends Event{
     private T v2;
 
 
-    public PheroEvent(float time,IAntColony<T> antcolony,TspACOSimulation<T,Integer> parent, T v1, T v2) {
+    public PheroEvent(float time, ExtRandom random, IAntColony<T> antcolony,TspACOSimulation<T,Integer> parent, T v1, T v2) {
         super(time);
         rand = ExtRandom.getInstance();
         this.antcolony = antcolony;
