@@ -1,15 +1,15 @@
-package sed;
+package tspACO;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.PriorityQueue;
 import java.util.TreeSet;
 
-import antColony.Edge;
-import weighted_graph.WeightedGraph;
+import graph.WeightedGraph;
+import sed.ISimulator;
+import sed.Simulator;
 
 
 
@@ -23,7 +23,7 @@ public class TspACOSimulation<T, E> {
     protected float alpha,beta,delta,pheroLevel,eta,rho;
     protected WeightedGraph<T,E> graph;
     protected float graphWeight; //falta isto
-    public Simulator simulator;
+    public ISimulator simulator;
 
    // Comparator<Cycle<T,E>> cycleComparator;
 	//TreeSet<Student> myTreeSet = new TreeSet<>(ageComparator);

@@ -1,4 +1,4 @@
-package antColony;
+package graph;
 
 import java.util.Objects;
 

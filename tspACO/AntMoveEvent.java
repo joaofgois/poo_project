@@ -1,12 +1,13 @@
-package sed;
+package tspACO;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import antColony.IAntColony;
+import antColony.*;
 import expRandom.ExtRandom;
+import sed.*;
 
 /**
  * Event that moves the ant from node to node.<p>
@@ -21,7 +22,7 @@ public class AntMoveEvent<T> extends Event{
     //private WeightedGraph<T, Integer> graph;
     private ExtRandom rand;
     private TspACOSimulation<T, Integer> parent;
-    private Simulator simulator;
+    private ISimulator simulator;
 
 
     //constructor
@@ -34,7 +35,7 @@ public class AntMoveEvent<T> extends Event{
      * @param antNext
      * @param parent
      */
-    public AntMoveEvent(float time, Simulator simulator, IAntColony<T> antcolony, int antId, T antNext, TspACOSimulation<T,Integer> parent){
+    public AntMoveEvent(float time, ISimulator simulator, IAntColony<T> antcolony, int antId, T antNext, TspACOSimulation<T,Integer> parent){
         super(time);
         rand = ExtRandom.getInstance();
         this.antcolony = antcolony;

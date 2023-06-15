@@ -1,4 +1,4 @@
-package weighted_graph;
+package graph;
 
 import java.util.Set;
 

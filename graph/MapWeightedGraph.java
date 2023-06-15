@@ -1,11 +1,10 @@
-package weighted_graph;
+package graph;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
-import sed.Event;
 
 public class MapWeightedGraph<T, E> implements WeightedGraph<T, E> {
 		

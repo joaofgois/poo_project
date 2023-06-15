@@ -1,14 +1,13 @@
 package sed;
 
 import java.util.Comparator;
-import java.util.PriorityQueue;
 import java.util.TreeSet;
 
 // Custom comparator class
 class EventComparator implements Comparator<Event> {
     @Override
     public int compare(Event event1, Event event2) {
-        return Float.compare(event1.time, event2.time);
+        return Float.compare(event1.getTimeStamp(), event2.getTimeStamp());
     }
 }
 

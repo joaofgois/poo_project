@@ -1,14 +1,13 @@
-package TSP;
+package tspACO;
 
 import sed.*;
-import weighted_graph.*;
 import antColony.*;
 import expRandom.*;
+import graph.*;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.PriorityQueue;
 import java.util.Scanner;
 
 public class TSP {
@@ -20,12 +19,12 @@ public class TSP {
     protected double finalInstant;
     protected WeightedGraph<Integer, Integer> graph;
     protected float graphWeight; // falta isto
-    protected Simulator simulator;
+    protected ISimulator simulator;
 
     public static void main(String[] args) {
         WeightedGraph<Integer, Integer> grafo;
         Scanner scanner;
-        GraphCreator context = new GraphCreator();
+        GraphCreator<Integer, Integer> context = new GraphCreator<Integer, Integer>();
         int inputVertices = 0;
 
         System.out.println(args.length);
@@ -34,7 +33,7 @@ public class TSP {
             case 12:
                 if (args[0].equals("-r")) {
                     inputVertices = Integer.parseInt(args[1]);
-                    CreateGraphStrategy generate;
+                    CreateGraphStrategy<Integer, Integer> generate;
                     generate = new RandomGraphStrategy(inputVertices);
 
                     context.setStrategy(generate);
@@ -48,16 +47,16 @@ public class TSP {
             // Input from terminal with file.
             case 2:
                 if (args[0].equals("-f")) {
-                    inputVertices = Integer.parseInt(scanner.nextLine());
-                    CreateGraphStrategy readfile;
-                    // Try to open the file
-                    try {
-                        scanner = new Scanner(new File(args[1]));
-                    } catch (FileNotFoundException e) {
-                        e.printStackTrace();
-                        return;
-                    }
+                	// Try to open the file
+                	try {
+                		scanner = new Scanner(new File(args[1]));
+                	} catch (FileNotFoundException e) {
+                		e.printStackTrace();
+                		return;
+                	}
+                    CreateGraphStrategy<Integer,Integer> readfile;
                     // Read input from file
+                    inputVertices = Integer.parseInt(scanner.next());
                     if (scanner.hasNextLine()) {
                         // skipping everything for now
                         scanner.nextLine();

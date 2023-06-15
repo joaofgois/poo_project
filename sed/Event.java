@@ -19,7 +19,11 @@ public abstract class Event {//implements Comparable<Event>{
     public Event(float time){
         this.time = time;
     }
+    
+    public float getTimeStamp() {
+    	return time;
+    }
 
-    abstract void simulateEvent();
+    protected abstract void simulateEvent();
     
 }

@@ -1,4 +1,4 @@
-package weighted_graph;
+package graph;
 
 public class GraphCreator<T,E> {
 	private CreateGraphStrategy<T,E> strategy;

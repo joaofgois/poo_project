@@ -1,6 +1,8 @@
-package weighted_graph;
+package tspACO;
 
 import java.util.Scanner;
+
+import graph.*;
 
 public class FileGraphStrategy implements CreateGraphStrategy<Integer,Integer> {
 	

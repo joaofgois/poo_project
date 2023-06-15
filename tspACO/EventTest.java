@@ -1,4 +1,6 @@
-package sed;
+package tspACO;
+
+import sed.Event;
 
 public class EventTest extends Event {
 
@@ -7,7 +9,7 @@ public class EventTest extends Event {
 	}
 
 	@Override
-	void simulateEvent() {
+	protected void simulateEvent() {
 		System.out.println(this);
 
 	}

@@ -1,6 +1,6 @@
 package sed;
 
-public class Simulator {
+public class Simulator implements ISimulator {
     private Event currentEvent;
     private float simulationTime;
     private float currentTime;
@@ -20,7 +20,8 @@ public class Simulator {
 
     }
     
-    public void simulate(){
+    @Override
+	public void simulate(){
     	if (currentEvent == null) {
     		currentEvent = pec.nextEvPEC();
     		if (currentEvent == null) {
@@ -39,15 +40,18 @@ public class Simulator {
         }
     }
     
-    public void addEvPEC(Event e) {
+    @Override
+	public void addEvPEC(Event e) {
     	pec.addEvPEC(e);
     }
     
-    public Event nextEvPEC() {
+    @Override
+	public Event nextEvPEC() {
     	return pec.nextEvPEC();
     }
     
-    public float getSimTime() {
+    @Override
+	public float getSimTime() {
     	return simulationTime;
     }
 }

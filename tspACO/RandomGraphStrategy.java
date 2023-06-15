@@ -1,5 +1,8 @@
-package weighted_graph;
+package tspACO;
 import java.util.Random;
+
+import graph.*;
+
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Collections;

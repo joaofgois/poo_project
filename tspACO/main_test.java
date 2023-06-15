@@ -1,6 +1,8 @@
-package weighted_graph;
+package tspACO;
 
 import expRandom.*;
+import graph.*;
+
 import java.io.*;
 import java.util.Scanner;
 import java.util.ArrayList;
@@ -17,7 +19,7 @@ public class main_test {
 
 		//try to open the file
 		try {
-			scanner = new Scanner(new File("src/weighted_graph/testgraph.txt"));
+			scanner = new Scanner(new File("src/tspACO/testgraph.txt"));
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 			return;

@@ -1,7 +1,9 @@
-package sed;
+package tspACO;
 
 import antColony.IAntColony;
 import expRandom.ExtRandom;
+import sed.Event;
+import sed.ISimulator;
 
 public class PheroEvent<T> extends Event{
 
@@ -9,7 +11,7 @@ public class PheroEvent<T> extends Event{
     private IAntColony<T> antcolony;
     private ExtRandom rand;
     private TspACOSimulation<T, Integer> parent;
-    private Simulator simulator;
+    private ISimulator simulator;
 
     private T v1;
     private T v2;
@@ -22,7 +24,7 @@ public class PheroEvent<T> extends Event{
      * @param v1
      * @param v2
      */
-    public PheroEvent(float time, Simulator simulator, IAntColony<T> antcolony, TspACOSimulation<T,Integer> parent, T v1, T v2) {
+    public PheroEvent(float time, ISimulator simulator, IAntColony<T> antcolony, TspACOSimulation<T,Integer> parent, T v1, T v2) {
         super(time);
         rand = ExtRandom.getInstance();
         this.antcolony = antcolony;
@@ -34,7 +36,7 @@ public class PheroEvent<T> extends Event{
     }
 
     @Override
-    void simulateEvent() {
+    protected void simulateEvent() {
         
         if (antcolony.setPheromone(v1, v2, -1*parent.rho) != 0) {
         	this.time += rand.nextExp(parent.eta);

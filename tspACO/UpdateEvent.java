@@ -1,13 +1,15 @@
-package sed;
+package tspACO;
 import expRandom.*;
+import sed.Event;
+import sed.ISimulator;
 
 
 public class UpdateEvent<T> extends Event {
 	ExtRandom rand;
 	private int number;
-	Simulator simulator;
+	ISimulator simulator;
 
-	public UpdateEvent(float time, Simulator simulator, TspACOSimulation<T, Integer> parent) {
+	public UpdateEvent(float time, ISimulator simulator, TspACOSimulation<T, Integer> parent) {
 		super(time);
 		this.rand = ExtRandom.getInstance();
 		this.number = 1;
@@ -15,7 +17,7 @@ public class UpdateEvent<T> extends Event {
 	}
 
 	@Override
-	void simulateEvent() {
+	protected void simulateEvent() {
 		//Observation number :
 		//Present instant: instant
 		//Number of move events: mevents

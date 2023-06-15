@@ -1,4 +1,4 @@
-package weighted_graph;
+package graph;
 
 public class IntMapWeightedGraph extends MapWeightedGraph<Integer, Integer> {
 

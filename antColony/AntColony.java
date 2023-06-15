@@ -1,6 +1,9 @@
 package antColony;
 import java.util.HashMap;
 import java.util.Map;
+
+import graph.Edge;
+
 import java.util.List;
 
 public class AntColony<T> implements IAntColony<T> {
