@@ -63,25 +63,26 @@ public class AntMoveEvent<T> extends Event{
             
             //simulacao e phero
             int w = 0;
-            int miu=0;
             List<T> path = new ArrayList<>(antcolony.getAntPath(antId));
 
             //calculate total path weight
             for(int i=0; i<antcolony.getAntPath(antId).size()-1;i++){
                 w += parent.graph.getEdgeWeight(path.get(i),path.get(i+1));
             }
-
+            //lay down the pheromones
             for(int i=0; i<antcolony.getAntPath(antId).size()-1;i++){
             	//set pheromone value
-                if (antcolony.setPheromone(path.get(i),path.get(i+1),(parent.pheroLevel*w)/miu) == 0) {// miu= peso do grafo, por fazer....!!!!!!!!!!
+            	
+                if (antcolony.getPheromone(path.get(i),path.get(i+1)) == 0) {
                 	//create new evaporation event
                 	simulator.addEvPEC(new PheroEvent<T>((float) (time + rand.nextExp(parent.eta)), parent.simulator, antcolony, parent, path.get(i), path.get(i+1)));
                 }
+                antcolony.setPheromone(path.get(i),path.get(i+1),(parent.pheroLevel*w)/parent.miu);
                 
             }
             antcolony.removeLastAntPath(antId);
             
-            //falta funcao para mandar path e peso para o ACOSIMULATOR.storeCycle()
+            //store cycle
             parent.storeCycle(new ArrayList<>(antcolony.getAntPath(antId)), w);
 
             // reset formiga
@@ -122,6 +123,8 @@ public class AntMoveEvent<T> extends Event{
     }
 
     private T nextAntMove(){
+    	float[] probabilityMoves;
+    	List<T> possible = new ArrayList<T>();
         
         float ci_total=0;
 
@@ -139,17 +142,17 @@ public class AntMoveEvent<T> extends Event{
             possible_temp = parent.graph.getAdjacency(antcolony.getAntPosition(antId));
             possible_temp.remove(antcolony.getAntPosition(antId));
             
-        }
-        List<T> possible = new ArrayList<T>();
-        possible.addAll(possible_temp);
-
-        float[] probabilityMoves = new float[possible.size()];
-        
-        if (possible_temp.size() == 0){
-        	for (int i = 0; i < possible.size(); i++) {
-        		probabilityMoves[i] += 1/possible.size();
-        	}
+            possible.addAll(possible_temp);
+            
+            probabilityMoves = new float[possible.size()];
+            
+            for (int i = 0; i < possible.size(); i++) {
+            	probabilityMoves[i] = (float) 1/possible.size();
+            }
         } else {
+            possible.addAll(possible_temp);
+
+            probabilityMoves = new float[possible.size()];
         	//calculate probabilities for each possible next move
         	for (int i = 0; i < possible.size(); i++) {
         		

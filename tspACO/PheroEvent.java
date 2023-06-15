@@ -44,7 +44,7 @@ public class PheroEvent<T> extends Event{
         		simulator.addEvPEC(this);        	
         	}
         }
-        System.out.println(antcolony.getPheromone(v1, v2));
+        //System.out.println(antcolony.getPheromone(v1, v2));
 
 
     }

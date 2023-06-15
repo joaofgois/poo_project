@@ -19,8 +19,8 @@ import sed.Simulator;
  * <strong>E</strong> is the data type for the graph's edge weight.<p>
  */
 public class TspACOSimulation<T, E> {
-    private ArrayList<Cycle<T,Integer>> hamiCycles;
-    protected float alpha,beta,delta,pheroLevel,eta,rho;
+    ArrayList<Cycle<T,Integer>> hamiCycles;
+    protected float alpha,beta,delta,pheroLevel,eta,rho, miu;
     protected WeightedGraph<T,E> graph;
     protected float graphWeight; //falta isto
     public ISimulator simulator;
@@ -44,7 +44,9 @@ public class TspACOSimulation<T, E> {
         this.alpha = alpha;
         this.beta = beta;
         this.delta = delta;
+        this.pheroLevel = pheroLevel;
         this.eta = eta;
+        this.miu = 10;
         this.rho = rho;
         this.hamiCycles = new ArrayList<>();
         this.simulator = new Simulator(simtime);
@@ -64,6 +66,7 @@ public class TspACOSimulation<T, E> {
         	}
         }
         hamiCycles.add(new Cycle<T,Integer>(cycle,cycle_weight));
+        //System.out.println(hamiCycles);
         
     }
     
