@@ -3,6 +3,7 @@ package weighted_graph;
 import expRandom.*;
 import java.io.*;
 import java.util.Scanner;
+import java.util.ArrayList;
 
 import antColony.*;
 import sed.*;
@@ -61,6 +62,24 @@ public class main_test {
 		
 		parent.simulator.getPEC().addEvPEC(ev2);
 		parent.simulator.simulate();
+		ArrayList<Integer> list = new ArrayList<Integer>();
+		list.add(1);
+		list.add(5);
+		list.add(7);
+		list.add(9);
+		list.add(15);
+		Cycle<Integer,Integer> ciclo = new Cycle<Integer,Integer>(list,12);
+		System.out.println(ciclo);
 	}
 
 }
+
+
+
+
+
+
+
+
+
+

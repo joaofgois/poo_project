@@ -38,8 +38,8 @@ public class PheroEvent<T> extends Event{
         
         if (antcolony.setPheromone(v1, v2, -1*parent.rho) != 0) {
         	this.time += rand.nextExp(parent.eta);
-        	if (this.time < parent.simulator.getSimTime()) {
-        		parent.simulator.getPEC().addEvPEC(this);        	
+        	if (this.time < simulator.getSimTime()) {
+        		simulator.getPEC().addEvPEC(this);        	
         	}
         }
         System.out.println(antcolony.getPheromone(v1, v2));

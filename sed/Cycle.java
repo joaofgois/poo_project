@@ -11,4 +11,17 @@ public class Cycle<T, E> {
         this.weight = weight;
     }
 
+	@Override
+	public String toString() {
+		String str = "{";
+		for (int i=0; i<cycle.size(); i++) {
+			str += cycle.get(i).toString();
+			if (i < cycle.size()-1) {
+				str += ",";
+			}
+		}
+		return str+"}:" + weight.toString();
+	}
+    
+    
 }

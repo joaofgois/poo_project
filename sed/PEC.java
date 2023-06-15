@@ -2,6 +2,7 @@ package sed;
 
 import java.util.Comparator;
 import java.util.PriorityQueue;
+import java.util.TreeSet;
 
 // Custom comparator class
 class EventComparator implements Comparator<Event> {
@@ -12,11 +13,11 @@ class EventComparator implements Comparator<Event> {
 }
 
 public class PEC {
-    public PriorityQueue<Event> pec;
+    public TreeSet<Event> pec;
 
     public PEC() {
         // Create a Priority Queue
-        pec = new PriorityQueue<>(new EventComparator());
+        pec = new TreeSet<>(new EventComparator());
     }
 
     public void addEvPEC(Event event) {
@@ -26,6 +27,6 @@ public class PEC {
 
     public Event nextEvPEC() {
         // Remove items from the Priority Queue (DEQUEUE)
-        return pec.poll();
+        return pec.pollFirst();
     }
 }

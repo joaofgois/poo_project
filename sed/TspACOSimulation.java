@@ -4,19 +4,12 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.PriorityQueue;
+import java.util.TreeSet;
 
+import antColony.Edge;
 import weighted_graph.WeightedGraph;
-
-
-// class CycleComparator<T,E> implements Comparator<Cycle<T,E>> {
-
-//     @Override
-//     public int compare(Cycle<T, E> arg0, Cycle<T, E> arg1) {
-
-//     }
-
-// }
 
 
 
@@ -26,12 +19,14 @@ import weighted_graph.WeightedGraph;
  * <strong>E</strong> is the data type for the graph's edge weight.<p>
  */
 public class TspACOSimulation<T, E> {
-    private PriorityQueue<Cycle<T,E>> bestCycles;
+    private ArrayList<Cycle<T,Integer>> hamiCycles;
     protected float alpha,beta,delta,pheroLevel,eta,rho;
     protected WeightedGraph<T,E> graph;
     protected float graphWeight; //falta isto
     public Simulator simulator;
 
+   // Comparator<Cycle<T,E>> cycleComparator;
+	//TreeSet<Student> myTreeSet = new TreeSet<>(ageComparator);
     /**
      * 
      * @param graph
@@ -51,17 +46,24 @@ public class TspACOSimulation<T, E> {
         this.delta = delta;
         this.eta = eta;
         this.rho = rho;
-        //this.bestCycles = new PriorityQueue<Cycle<T,E>>(new CycleComparator<T,E>());;   //falta isto
+        this.hamiCycles = new ArrayList<>();
         this.simulator = new Simulator(simtime);
     }
 
-    public void storeCycle(ArrayList<T> cycle, E cycle_weight){
+    public void storeCycle(ArrayList<T> cycle, int cycle_weight){
         //ArrayList1.equals(ArrayList2) == true
-        Cycle<T,E> hamiCycle = new Cycle<T,E>(cycle, cycle_weight);
-        //for (int i=0; i<bestCycles.size(); i++){
-            //if(bestCycles.get(i).cycle.equals(cycle)){
-                
-            //}
-       // }
+        for (int i=0; i< hamiCycles.size(); i++) {
+        	if(hamiCycles.get(i).weight > cycle_weight) {
+        		hamiCycles.add(i, new Cycle<T,Integer>(cycle,cycle_weight));
+        		return;
+        	}
+        	if (hamiCycles.get(i).weight == cycle_weight) {
+        		if(hamiCycles.get(i).cycle.equals(cycle)) {
+        			return;
+        		}
+        	}
+        }
+        hamiCycles.add(new Cycle<T,Integer>(cycle,cycle_weight));
+        
     }
 }
