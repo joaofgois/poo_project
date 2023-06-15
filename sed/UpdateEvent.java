@@ -32,7 +32,7 @@ public class UpdateEvent<T> extends Event {
 		number += 1;
 		time += simulator.getSimTime()/20;
 		if (time < simulator.getSimTime()) {
-			simulator.getPEC().addEvPEC(this);
+			simulator.addEvPEC(this);
 		}
 	}
 

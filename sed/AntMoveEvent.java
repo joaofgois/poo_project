@@ -74,7 +74,7 @@ public class AntMoveEvent<T> extends Event{
             	//set pheromone value
                 if (antcolony.setPheromone(path.get(i),path.get(i+1),(parent.pheroLevel*w)/miu) == 0) {// miu= peso do grafo, por fazer....!!!!!!!!!!
                 	//create new evaporation event
-                	simulator.getPEC().addEvPEC(new PheroEvent<T>((float) (time + rand.nextExp(parent.eta)), parent.simulator, antcolony, parent, path.get(i), path.get(i+1)));
+                	simulator.addEvPEC(new PheroEvent<T>((float) (time + rand.nextExp(parent.eta)), parent.simulator, antcolony, parent, path.get(i), path.get(i+1)));
                 }
                 
             }
@@ -109,7 +109,7 @@ public class AntMoveEvent<T> extends Event{
         
         //add new event to PEC 
         this.time += rand.nextExp( parent.delta * parent.graph.getEdgeWeight( antcolony.getAntPosition(antId), antNext));
-        parent.simulator.getPEC().addEvPEC(this);  
+        simulator.addEvPEC(this);  
 
     }
 
@@ -137,25 +137,32 @@ public class AntMoveEvent<T> extends Event{
         if (possible_temp.size() == 0){
             possible_temp = parent.graph.getAdjacency(antcolony.getAntPosition(antId));
             possible_temp.remove(antcolony.getAntPosition(antId));
+            
         }
         List<T> possible = new ArrayList<T>();
         possible.addAll(possible_temp);
 
         float[] probabilityMoves = new float[possible.size()];
-
-        //calculate probabilities for each possible next move
-        for (int i = 0; i < possible.size(); i++) {
-            
-            probabilityMoves[i]= calculateProb(possible.get(i));
-            ci_total+= probabilityMoves[i];
-            
-        }
-        //normalize the probabilities
-        for (int i = 0; i < possible.size(); i++) {
-            
-            probabilityMoves[i]/=ci_total;  
-        }
         
+        if (possible_temp.size() == 0){
+        	for (int i = 0; i < possible.size(); i++) {
+        		probabilityMoves[i] += 1/possible.size();
+        	}
+        } else {
+        	//calculate probabilities for each possible next move
+        	for (int i = 0; i < possible.size(); i++) {
+        		
+        		probabilityMoves[i]= calculateProb(possible.get(i));
+        		ci_total+= probabilityMoves[i];
+        		
+        	}
+        	//normalize the probabilities
+        	for (int i = 0; i < possible.size(); i++) {
+        		
+        		probabilityMoves[i]/=ci_total;  
+        	}
+        }
+
         //escolher no (ja se calculou as probabilidades dos nos nao visitados)
         int index = rand.chooseRand(probabilityMoves);        
         return possible.get(index);
@@ -165,7 +172,6 @@ public class AntMoveEvent<T> extends Event{
        
        return (parent.alpha+ antcolony.getPheromone(antcolony.getAntPosition(antId),v2) )/(parent.beta + parent.graph.getEdgeWeight(antcolony.getAntPosition(antId) ,v2));
     }
-
 
 }
 

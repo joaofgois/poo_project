@@ -66,4 +66,13 @@ public class TspACOSimulation<T, E> {
         hamiCycles.add(new Cycle<T,Integer>(cycle,cycle_weight));
         
     }
+    
+    public void printCycles() {
+    	if (hamiCycles.size() > 0) {
+    		System.out.println("  " + hamiCycles.get(0));
+    	}
+    	for (int i=1; i<6 && i < hamiCycles.size(); i++) {
+    		System.out.println("  " + hamiCycles.get(i));
+    	}
+    }
 }

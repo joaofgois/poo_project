@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class RandomGraphStrategy implements CreateGraphStrategy {
+public class RandomGraphStrategy implements CreateGraphStrategy<Integer, Integer> {
 	private Random random;
 	private int maxWeight;
 	
@@ -14,8 +14,8 @@ public class RandomGraphStrategy implements CreateGraphStrategy {
 	}
 
 	@Override
-	public IntListWeightedGraph create(int vertices) {
-		IntListWeightedGraph graph = new IntListWeightedGraph(vertices);
+	public MapWeightedGraph<Integer,Integer> create(int vertices) {
+		MapWeightedGraph<Integer,Integer> graph = new IntMapWeightedGraph(vertices);
 		//int temp = ((vertices*(vertices-1))/2) - vertices + 1;
 		int nrEdges = random.nextInt( ((vertices*(vertices-1))/2) - vertices + 1);
 		System.out.println(nrEdges);

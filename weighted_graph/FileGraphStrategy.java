@@ -2,7 +2,7 @@ package weighted_graph;
 
 import java.util.Scanner;
 
-public class FileGraphStrategy implements CreateGraphStrategy {
+public class FileGraphStrategy implements CreateGraphStrategy<Integer,Integer> {
 	
 	private Scanner scanner;
 
@@ -12,8 +12,8 @@ public class FileGraphStrategy implements CreateGraphStrategy {
 	}
 
 	@Override
-	public IntListWeightedGraph create(int vertices) { // throws NumberFormatException
-		IntListWeightedGraph graph = new IntListWeightedGraph(vertices);
+	public MapWeightedGraph<Integer,Integer> create(int vertices) { // throws NumberFormatxception
+		MapWeightedGraph<Integer,Integer> graph = new IntMapWeightedGraph(vertices);
 		int weight;
 		String str;
 		for (int i = 0; i < vertices; i++) {

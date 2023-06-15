@@ -14,7 +14,7 @@ public class Edge<T> {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(10);
+		return Objects.hash(v1) + Objects.hash(v2);
 	}
 
 	@Override

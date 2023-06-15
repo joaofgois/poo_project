@@ -1,21 +1,21 @@
 package weighted_graph;
 
-public class GraphCreator {
-	private CreateGraphStrategy strategy;
+public class GraphCreator<T,E> {
+	private CreateGraphStrategy<T,E> strategy;
 	
 	public GraphCreator() {
 	}
 
-	public GraphCreator(CreateGraphStrategy strategy) {
+	public GraphCreator(CreateGraphStrategy<T,E> strategy) {
 		this.strategy = strategy;
 	}
 	
 	
-	public void setStrategy(CreateGraphStrategy strategy) {
+	public void setStrategy(CreateGraphStrategy<T,E> strategy) {
 		this.strategy = strategy;
 	}
 
-	public IntListWeightedGraph createGraph(int vertices) {
+	public WeightedGraph<T,E> createGraph(int vertices) {
 		return (strategy.create(vertices));
 	}
 }

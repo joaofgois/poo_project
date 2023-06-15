@@ -39,8 +39,12 @@ public class Simulator {
         }
     }
     
-    public PEC getPEC() {
-    	return pec;
+    public void addEvPEC(Event e) {
+    	pec.addEvPEC(e);
+    }
+    
+    public Event nextEvPEC() {
+    	return pec.nextEvPEC();
     }
     
     public float getSimTime() {

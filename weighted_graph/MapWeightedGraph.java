@@ -3,12 +3,15 @@ package weighted_graph;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
 
-abstract class ListWeightedGraph<T, E> implements WeightedGraph<T, E> {
+import sed.Event;
+
+public class MapWeightedGraph<T, E> implements WeightedGraph<T, E> {
 		
     protected Map<T, Map<T, E>> adjacencylist;
 	
-	public ListWeightedGraph() {
+	public MapWeightedGraph() {
 		adjacencylist = new HashMap<>();
 	}
 
@@ -54,6 +57,23 @@ abstract class ListWeightedGraph<T, E> implements WeightedGraph<T, E> {
 	public int nrVertices() {
 		return adjacencylist.size();
 	}
-
+	
+	@Override
+	public void printGraph() {
+		TreeSet<T> keys = new TreeSet<T>(adjacencylist.keySet()); 
+		E weight;
+		for (T i : keys) {
+			for(T j : keys) {
+				weight = this.getEdgeWeight(i, j);
+				if (weight == null) {
+					System.out.printf("%-3s ", "-");
+				} else {
+					System.out.printf("%-3s ", this.getEdgeWeight(i, j));				
+				}
+			}
+			System.out.print("\n");
+		}
+		
+	}
 
 }

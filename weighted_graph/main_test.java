@@ -11,8 +11,8 @@ import sed.*;
 public class main_test {
 
 	public static void main(String[] args) {
-		CreateGraphStrategy readfile;
-		CreateGraphStrategy generate;
+		CreateGraphStrategy<Integer,Integer> readfile;
+		CreateGraphStrategy<Integer,Integer> generate;
 		Scanner scanner;
 
 		//try to open the file
@@ -28,11 +28,11 @@ public class main_test {
 			scanner.nextLine();			
 		}
 		readfile = new FileGraphStrategy(scanner);
-		generate = new RandomGraphStrategy(15);
+		generate = new RandomGraphStrategy(8);
 		
 		WeightedGraph<Integer, Integer> grafo;
 		
-		GraphCreator context = new GraphCreator();
+		GraphCreator<Integer,Integer> context = new GraphCreator<Integer,Integer>();
 		context.setStrategy(generate);
 		context.setStrategy(readfile);
 		
@@ -54,14 +54,15 @@ public class main_test {
 
 		System.out.println();
 		
-		TspACOSimulation<Integer, Integer> parent = new TspACOSimulation<Integer, Integer>(grafo, 20, 1, (float) 1.0, (float)1.0, (float)0.2, (float)2.0, (float)10.0, (float)0.5);
+		TspACOSimulation<Integer, Integer> parent = new TspACOSimulation<Integer, Integer>(grafo, 200, 1, (float) 1.0, (float)1.0, (float)0.2, (float)2.0, (float)10.0, (float)0.5);
 		
-		//Event ev1 = new AntMoveEvent<Integer>(5, parent.simulator, antcolony, 0, 0, parent);
-		antcolony.setPheromone(1, 0, 2);
-		Event ev2 = new PheroEvent<Integer>(3, parent.simulator, antcolony, parent, 0, 1);
+		Event ev1 = new AntMoveEvent<Integer>(0, parent.simulator, antcolony, 0, 0, parent);
+		//antcolony.setPheromone(1, 0, 2);
+		//Event ev2 = new PheroEvent<Integer>(3, parent.simulator, antcolony, parent, 0, 1);
 		
-		parent.simulator.getPEC().addEvPEC(ev2);
+		parent.simulator.addEvPEC(ev1);
 		parent.simulator.simulate();
+		parent.printCycles();
 		ArrayList<Integer> list = new ArrayList<Integer>();
 		list.add(1);
 		list.add(5);

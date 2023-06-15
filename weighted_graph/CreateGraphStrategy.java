@@ -1,5 +1,5 @@
 package weighted_graph;
 
-public interface CreateGraphStrategy {
-	IntListWeightedGraph create(int vertices);	
+public interface CreateGraphStrategy<T,E> {
+	MapWeightedGraph<T,E> create(int vertices);	
 }
