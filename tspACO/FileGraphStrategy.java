@@ -22,7 +22,7 @@ public class FileGraphStrategy implements CreateGraphStrategy<Integer,Integer> {
 			for (int j = 0; j < vertices; j++) {
 				try {
 					str = scanner.next();
-					System.out.println(str);
+					System.out.println(str); //para tirar
 					weight = Integer.parseInt(str);
 				} catch (NumberFormatException e){
 					System.out.println("Input file contains non integer token\n");

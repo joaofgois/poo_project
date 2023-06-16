@@ -56,18 +56,27 @@ public class main_test {
 
 		System.out.println();
 		
-		TspACOSimulation<Integer, Integer> parent = new TspACOSimulation<Integer, Integer>(grafo, 1000, 1, (float) 1.0, (float)1.0, (float)0.2, (float)2.0, (float)10.0, (float)0.5);
-		
-		Event ev1 = new AntMoveEvent<Integer>(0, parent.simulator, antcolony, 0, 0, parent);
-		Event ev2 = new AntMoveEvent<Integer>(0, parent.simulator, antcolony, 1, 0, parent);
+		//TspACOSimulation<Integer, Integer> parent = new TspACOSimulation<Integer, Integer>(grafo, 1000, 1, (float) 1.0, (float)1.0, (float)0.2, (float)2.0, (float)10.0, (float)0.5);
+		Simulator simulator = new Simulator(200);
+		Parameters<Integer, Integer> parameters = new Parameters<Integer,Integer>();
+        parameters.graph = grafo;
+        parameters.alpha = (float)1.0;
+        parameters.beta = (float)1.0;
+        parameters.delta = (float)0.2;
+        parameters.pheroLevel = (float)2.0;
+        parameters.eta = (float)10.0;
+        parameters.rho = (float)0.5;
+        parameters.miu = 10;
+		Event ev1 = new AntMoveEvent<Integer>(0, simulator, antcolony, 0, 0, parameters );
+		Event ev2 = new AntMoveEvent<Integer>(0, simulator, antcolony, 1, 0, parameters);
 		//antcolony.setPheromone(1, 0, 2);
 		//Event ev2 = new PheroEvent<Integer>(3, parent.simulator, antcolony, parent, 0, 1);
 
-		parent.simulator.addEvPEC(ev1);
-		parent.simulator.addEvPEC(ev2);
-		parent.simulator.simulate();
+		simulator.addEvPEC(ev1);
+		simulator.addEvPEC(ev2);
+		simulator.simulate();
 		//System.out.println("--" + parent.hamiCycles.get(0));
-		parent.printCycles();
+		parameters.printCycles();
 		
 		/*
 		ArrayList<Integer> list = new ArrayList<Integer>();

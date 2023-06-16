@@ -13,22 +13,18 @@ import java.util.Scanner;
 
 public class TSP {
 
-    protected static float alpha, beta, delta;
-    protected static float pheroLevel, eta, rho;
     protected static int nrPheroEvents, nrAntMoveEvents;
     protected static int antColonySize, colonyNest;
     protected static float finalInstant;
-    protected WeightedGraph<Integer, Integer> graph;
     protected static float graphWeight; // falta isto
     protected static ISimulator simulator;
-    protected ArrayList<Cycle<Integer, Integer>> hamiCycles;
+    protected static Parameters<Integer,Integer> parameters;
 
     public static void main(String[] args) {
-        WeightedGraph<Integer, Integer> grafo;
         GraphCreator<Integer, Integer> context = new GraphCreator<Integer, Integer>();
-        Scanner scanner;
+        Scanner scanner = null;
         AntColony<Integer> antColony;
-        AntMoveEvent<Integer> antMoveEvent;
+        parameters = new Parameters<Integer,Integer>();
 
         int inputVertices = 0;
 
@@ -37,26 +33,29 @@ public class TSP {
             // Input from terminal without file.
             case 12:
                 if (args[0].equals("-r")) {
-                    inputVertices = Integer.parseInt(args[1]);
-                    colonyNest = Integer.parseInt(args[3]);
-                    alpha = Float.parseFloat(args[4]);
-                    beta = Float.parseFloat(args[5]);
-                    delta = Float.parseFloat(args[6]);
-                    eta = Float.parseFloat(args[7]);
-                    rho = Float.parseFloat(args[8]);
-                    pheroLevel = Float.parseFloat(args[9]);
-                    antColonySize = Integer.parseInt(args[10]);
-                    finalInstant = Float.parseFloat(args[11]);
-
+                    try {
+                        inputVertices = Integer.parseInt(args[1]);
+                        colonyNest = Integer.parseInt(args[3]);
+                        parameters.alpha = Float.parseFloat(args[4]);
+                        parameters.beta = Float.parseFloat(args[5]);
+                        parameters.delta = Float.parseFloat(args[6]);
+                        parameters.eta = Float.parseFloat(args[7]);
+                        parameters.rho = Float.parseFloat(args[8]);
+                        parameters.pheroLevel = Float.parseFloat(args[9]);
+                        antColonySize = Integer.parseInt(args[10]);
+                        finalInstant = Float.parseFloat(args[11]);
+                    } catch (NumberFormatException e){
+                        System.out.println("Input contains non integer/decimal token\n");
+                        System.exit(1);
+                    }
+                    //Create Strategy to Create Graph
                     CreateGraphStrategy<Integer, Integer> generate;
                     generate = new RandomGraphStrategy(inputVertices);
-
                     context.setStrategy(generate);
-
-                    grafo = context.createGraph(inputVertices);
 
                 } else {
                     System.out.println("One or more input parameters are wrong.");
+                    System.exit(1);
                 }
                 break;
             // Input from terminal with file.
@@ -67,59 +66,58 @@ public class TSP {
                         scanner = new Scanner(new File(args[1]));
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
-                        return;
+                        System.exit(1);
                     }
-                    CreateGraphStrategy<Integer, Integer> readfile;
-                    // Read input from file
-                    if (scanner.hasNextLine()) {
-                        // skipping everything for now
-                        scanner.nextLine();
+                    
+                    //Read File Input
+                    try {
+                        inputVertices = Integer.parseInt(scanner.next());
+                        colonyNest = Integer.parseInt(scanner.next());
+                        parameters.alpha = Float.parseFloat(scanner.next());
+                        parameters.beta = Float.parseFloat(scanner.next());
+                        parameters.delta = Float.parseFloat(scanner.next());
+                        parameters.eta = Float.parseFloat(scanner.next());
+                        parameters.rho = Float.parseFloat(scanner.next());
+                        parameters.pheroLevel = Float.parseFloat(scanner.next());
+                        antColonySize = Integer.parseInt(scanner.next());
+                        finalInstant = Float.parseFloat(scanner.next());
+                    } catch (NumberFormatException e){
+                        System.out.println("Input contains non integer/decimal token\n");
+                        System.exit(1);
                     }
-                    readfile = new FileGraphStrategy(scanner);
 
+                    //Create Strategy to Create Graph
+                    CreateGraphStrategy<Integer, Integer> readfile;
+                    readfile = new FileGraphStrategy(scanner);
                     context.setStrategy(readfile);
 
-                    grafo = context.createGraph(inputVertices);
                 } else {
                     System.out.println("One or more input parameters are wrong.");
+                    System.exit(1);
                 }
                 break;
             // Incorrect number of input parameters.
             default:
                 System.out.println("Number of input parameters is wrong.");
-                System.exit(0);
+                System.exit(1);
                 break;
         }
 
         simulator = new Simulator(finalInstant);
-        grafo = context.createGraph(inputVertices);
+        parameters.graph = context.createGraph(inputVertices);
 
         // Create the ant colony and the antMoveEvent
         antColony = new AntColony<>(colonyNest);
         for (int i = 0; i < antColonySize; i++) {
             antColony.addAnt(i);
-            simulator.addEvPEC(new AntMoveEvent<Integer>(0, simulator, antColony, i, colonyNest, TSP.this));
+            simulator.addEvPEC(new AntMoveEvent<Integer>(0, simulator, antColony, i, colonyNest, parameters));
         }
 
         // Iniciate the simulator
-        simulator.addEvPEC(new UpdateEvent<Integer>(0, simulator, TSP.this));
+        simulator.addEvPEC(new UpdateEvent<Integer>(0, simulator, parameters));
         simulator.simulate();
 
-    }
 
-    public void storeCycle(ArrayList<Integer> cycle, int cycle_weight) {
-        // ArrayList1.equals(ArrayList2) == true
-        for (int i = 0; i < hamiCycles.size(); i++) {
-            if (hamiCycles.get(i).weight > cycle_weight) {
-                hamiCycles.add(i, new Cycle<Integer, Integer>(cycle, cycle_weight));
-                return;
-            }
-            if (hamiCycles.get(i).weight == cycle_weight) {
-                if (hamiCycles.get(i).cycle.equals(cycle)) {
-                    return;
-                }
-            }
-        }
-        hamiCycles.add(new Cycle<Integer, Integer>(cycle, cycle_weight));
+        System.exit(0);
     }
 }

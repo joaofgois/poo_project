@@ -10,7 +10,7 @@ public class PheroEvent<T> extends Event{
     //protected float eta,rho;
     private IAntColony<T> antcolony;
     private ExtRandom rand;
-    private TspACOSimulation<T, Integer> parent;
+    private Parameters<T, Integer> parameters;
     private ISimulator simulator;
 
     private T v1;
@@ -24,13 +24,13 @@ public class PheroEvent<T> extends Event{
      * @param v1
      * @param v2
      */
-    public PheroEvent(float time, ISimulator simulator, IAntColony<T> antcolony, TspACOSimulation<T,Integer> parent, T v1, T v2) {
+    public PheroEvent(float time, ISimulator simulator, IAntColony<T> antcolony, Parameters<T,Integer> parameters, T v1, T v2) {
         super(time);
         rand = ExtRandom.getInstance();
         this.antcolony = antcolony;
         this.v1 = v1;
         this.v2 = v2;
-        this.parent = parent;
+        this.parameters = parameters;
         this.simulator = simulator;
         
     }
@@ -38,8 +38,8 @@ public class PheroEvent<T> extends Event{
     @Override
     protected void simulateEvent() {
         
-        if (antcolony.setPheromone(v1, v2, -1*parent.rho) != 0) {
-        	this.time += rand.nextExp(parent.eta);
+        if (antcolony.setPheromone(v1, v2, -1*parameters.rho) != 0) {
+        	this.time += rand.nextExp(parameters.eta);
         	if (this.time < simulator.getSimTime()) {
         		simulator.addEvPEC(this);        	
         	}
