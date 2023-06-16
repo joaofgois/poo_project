@@ -1,7 +1,7 @@
 package tspACO;
-import java.util.Random;
 
 import graph.*;
+import expRandom.ExtRandom;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -13,7 +13,7 @@ import java.util.Collections;
  * @author Hugo Brites, Miguel Tavares e João Góis.
  */
 public class RandomGraphStrategy implements CreateGraphStrategy<Integer, Integer> {
-	private Random random;
+	private ExtRandom random;
 	private int maxWeight;
 	
 	/**
@@ -22,7 +22,7 @@ public class RandomGraphStrategy implements CreateGraphStrategy<Integer, Integer
 	 * @param maxWeight The maximum weight of the edges.
 	 */
 	public RandomGraphStrategy(int maxWeight) {
-		random = new Random();
+		random = ExtRandom.getInstance();
 		this.maxWeight = maxWeight;
 	}
 
@@ -40,6 +40,9 @@ public class RandomGraphStrategy implements CreateGraphStrategy<Integer, Integer
 		
 		if (vertices < 2) {
 			return null;
+		}
+		if (vertices == 2) {
+			
 		}
 		int nrEdges = random.nextInt( ((vertices*(vertices-1))/2) - vertices + 1);
 		int v1;
