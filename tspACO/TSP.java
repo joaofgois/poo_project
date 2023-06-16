@@ -128,7 +128,7 @@ public class TSP {
         printInitialConditions();
 
         // Iniciate the simulator
-        simulator.addEvPEC(new UpdateEvent<Integer>(0, simulator, parameters));
+        simulator.addEvPEC(new UpdateEvent<Integer>(finalInstant/20, simulator, parameters));
         simulator.simulate();
         //parameters.printCycles();
 

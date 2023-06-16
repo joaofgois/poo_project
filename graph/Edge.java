@@ -39,6 +39,7 @@ public class Edge<T> {
 	 * 
 	 * @return the first vertex of the edge.
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
