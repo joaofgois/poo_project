@@ -4,6 +4,12 @@ import java.util.ArrayList;
 
 import graph.WeightedGraph;
 
+/**
+ * Parameters used by the ACO algorithm.
+ * 
+ * @param <T> Type of the nodes in the graph.
+ * @param <E> Type of the weights of the edges in the graph.
+ */
 public class Parameters<T,E> {
 	
     protected float alpha, beta, delta;
@@ -14,12 +20,21 @@ public class Parameters<T,E> {
     protected float graphWeight;
     protected ArrayList<Cycle<T, Integer>> hamiCycles;
 
+    /**
+     * Function that stores de input parameters.
+     */
     public Parameters() {
-    	this.hamiCycles = new ArrayList<>();
+        this.hamiCycles = new ArrayList<>();
         this.nrAntMoveEvents = 0;
         this.nrPheroEvents = 0;
     }
     
+    /**
+     * function thatt stores de best cycles found so far.
+     * 
+     * @param cycle The cycle to be stored.
+     * @param cycle_weight The weight of the cycle.
+     */
     public void storeCycle(ArrayList<T> cycle, int cycle_weight){
         //ArrayList1.equals(ArrayList2) == true
         for (int i=0; i< hamiCycles.size(); i++) {
@@ -38,16 +53,5 @@ public class Parameters<T,E> {
         
         
     }
-    /*
-    //FOR DEBUG ONLY---------------------------------------
-    public void printCycles() {
-    	if (hamiCycles.size() > 0) {
-    		System.out.println("  " + hamiCycles.get(0));
-    	}
-    	for (int i=1; i<6 && i < hamiCycles.size(); i++) {
-    		System.out.println("  " + hamiCycles.get(i));
-    	}
-    }
-    */
-    
+
 }

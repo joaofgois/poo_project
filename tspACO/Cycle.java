@@ -2,15 +2,31 @@ package tspACO;
 
 import java.util.ArrayList;
 
+/**
+ * This class implements a cycle, which is a list of nodes and a weight.
+ * 
+ * @author Hugo Brites, Miguel Tavares e João Góis.
+ */
 public class Cycle<T, E> {
     protected ArrayList<T> cycle;
-    protected E weight;
+	protected E weight;
 
-    public Cycle(ArrayList<T> cycle, E weight){
-        this.cycle = cycle;
-        this.weight = weight;
-    }
+	/**
+	 * Constructor for the Cycle class.
+	 * 
+	 * @param cycle The list of nodes.
+	 * @param weight The weight of the cycle.
+	 */
+	public Cycle(ArrayList<T> cycle, E weight) {
+		this.cycle = cycle;
+		this.weight = weight;
+	}
 
+	/**
+	 * Getter for the cycle.
+	 * 
+	 * @return The cycle.
+	 */
 	@Override
 	public String toString() {
 		String str = "{";
@@ -22,6 +38,5 @@ public class Cycle<T, E> {
 		}
 		return str+"}:" + weight.toString();
 	}
-    
-    
+
 }

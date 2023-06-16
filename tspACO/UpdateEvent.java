@@ -5,8 +5,10 @@ import sed.Event;
 import sed.ISimulator;
 
 /**
- * <strong>CLASS</strong><p>
- * blabalbalbalbal mfmemfemfemfef
+ * This class represents an update event in the simulation. It is used to print
+ * the current state of the simulation at regular intervals.
+ * 
+ * @param <T> The type of the nodes in the graph.
  */
 public class UpdateEvent<T> extends Event {
 	ExtRandom rand;
@@ -14,6 +16,13 @@ public class UpdateEvent<T> extends Event {
 	ISimulator simulator;
 	Parameters<T,Integer> parameters;
 
+	/**
+	 * Funcions that starts the update event.
+	 * 
+	 * @param time The time at which the event should occur.
+	 * @param simulator The simulator that the event is part of.
+	 * @param parameters The parameters of the simulation.
+	 */
 	public UpdateEvent(float time, ISimulator simulator, Parameters<T,Integer> parameters) {
 		super(time);
 		this.rand = ExtRandom.getInstance();
@@ -22,6 +31,9 @@ public class UpdateEvent<T> extends Event {
 		this.parameters = parameters;
 	} 
 
+	/**
+	 * Function that simulates the update event.
+	 */
 	@Override
 	protected void simulateEvent() {
 		System.out.println("Observation " + number + ":");

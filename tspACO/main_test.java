@@ -10,6 +10,9 @@ import java.util.ArrayList;
 import antColony.*;
 import sed.*;
 
+//SO PARA DEBUG------------------------------------------------------------------
+
+
 public class main_test {
 
 	public static void main(String[] args) {

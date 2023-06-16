@@ -3,11 +3,18 @@ package tspACO;
 import sed.*;
 import graph.*;
 import antColony.*;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
+/**
+ * Main class of the program. It reads the input parameters and creates the
+ * graph, the ant colony and the simulator. It also starts the simulation.
+ * 
+ * @autor Hugo Brites,Miguel Tavaresm João Góis.
+ * @version 1.0
+ * @since 2019-03-29
+ */
 public class TSP {
 
 	protected static int maxWeight;
@@ -16,11 +23,17 @@ public class TSP {
     protected static ISimulator simulator;
     protected static Parameters<Integer,Integer> parameters;
 
+    /**
+     * Main method of the program. It reads the input parameters and creates the
+     * graph, the ant colony and the simulator. It also starts the simulation.
+     * 
+     * @param args - Input parameters.
+     */
     public static void main(String[] args) {
         GraphCreator<Integer, Integer> context = new GraphCreator<Integer, Integer>();
         Scanner scanner = null;
         AntColony<Integer> antColony;
-        parameters = new Parameters<Integer,Integer>();
+        parameters = new Parameters<Integer, Integer>();
 
         int inputVertices = 0;
 
@@ -41,7 +54,7 @@ public class TSP {
                         parameters.pheroLevel = Float.parseFloat(args[9]);
                         antColonySize = Integer.parseInt(args[10]);
                         finalInstant = Float.parseFloat(args[11]);
-                    } catch (NumberFormatException e){
+                    } catch (NumberFormatException e) {
                         System.out.println("Input contains non integer/decimal token\n");
                         System.exit(1);
                     }
@@ -65,7 +78,7 @@ public class TSP {
                         e.printStackTrace();
                         System.exit(1);
                     }
-                    
+
                     //Read File Input
                     try {
                         inputVertices = Integer.parseInt(scanner.next());
@@ -78,7 +91,7 @@ public class TSP {
                         parameters.pheroLevel = Float.parseFloat(scanner.next());
                         antColonySize = Integer.parseInt(scanner.next());
                         finalInstant = Float.parseFloat(scanner.next());
-                    } catch (NumberFormatException e){
+                    } catch (NumberFormatException e) {
                         System.out.println("Input contains non integer/decimal token\n");
                         System.exit(1);
                     }
@@ -111,6 +124,9 @@ public class TSP {
             simulator.addEvPEC(new AntMoveEvent<Integer>(0, simulator, antColony, i, colonyNest, parameters));
         }
 
+        //print the initial parameters
+        printInitialConditions();
+
         // Iniciate the simulator
         simulator.addEvPEC(new UpdateEvent<Integer>(0, simulator, parameters));
         simulator.simulate();
@@ -119,14 +135,46 @@ public class TSP {
         System.exit(0);
     }
     
+    /**
+     * Calculates the sum of all the edges in the graph.
+     * 
+     * @return The sum of all the edges in the graph.
+     */
     private static int calculateGraphWeight() {
-    	int sum = 0;
-    	for(int i=0; i<parameters.graph.nrVertices(); i++) {
-    		for(int j=0; j<parameters.graph.nrVertices(); j++) {
-    			sum += parameters.graph.getEdgeWeight(i, j);
-    		}
-    	}
-		return sum;
-    	
+        int sum = 0;
+        for (int i = 0; i < parameters.graph.nrVertices(); i++) {
+            for (int j = 0; j < parameters.graph.nrVertices(); j++) {
+                sum += parameters.graph.getEdgeWeight(i, j);
+            }
+        }
+        return sum;
+
+    }
+    
+    /**
+     * Prints the initial conditions of the simulation.
+     */
+    public static void printInitialConditions() {
+    	System.out.println("Input parameters:");
+    	System.out.printf("%-10s%10d%s\n", " ", parameters.graph.nrVertices(), "  :  number of nodes in the graph");
+    	System.out.printf("%-10s%10d%s\n", " ", colonyNest, "  :  the nest node");
+    	System.out.printf("%-10s%10f%s\n", " ", parameters.alpha, "  :  alpha, ant move event");
+    	System.out.printf("%-10s%10f%s\n", " ", parameters.beta, "  :  beta, ant move event");
+    	System.out.printf("%-10s%10f%s\n", " ", parameters.delta, "  :  delta, ant move event");
+    	System.out.printf("%-10s%10f%s\n", " ", parameters.eta, "  :  eta, pheromone evaporation event");
+    	System.out.printf("%-10s%10f%s\n", " ", parameters.rho, "  :  rho, pheromone evaporation event");
+    	System.out.printf("%-10s%10f%s\n", " ", parameters.pheroLevel, "  :  pheromone level");
+    	System.out.printf("%-10s%10d%s\n", " ", antColonySize, "  :  ant colony size");
+    	System.out.printf("%-10s%10f%s\n", " ", finalInstant, "  :  final instant");
+        System.out.println();
+        System.out.printf("%-5s%15s\n", " ", "with graph:");
+        for(int i=0; i<parameters.graph.nrVertices(); i++) {
+        	System.out.printf("%23s", " ");
+            for(int j=0; j<parameters.graph.nrVertices(); j++) {
+            	System.out.printf("%-4d", parameters.graph.getEdgeWeight(i+1, j+1));
+            }
+            System.out.print("\n");
+        }
+        System.out.println();
     }
 }

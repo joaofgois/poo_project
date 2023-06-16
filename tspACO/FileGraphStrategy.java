@@ -4,15 +4,31 @@ import java.util.Scanner;
 
 import graph.*;
 
+/**
+ * This class reads the file input and creates a graph with the information read.
+ * 
+ * @author Hugo Brites, Miguel Tavares e João Góis.
+ */
 public class FileGraphStrategy implements CreateGraphStrategy<Integer,Integer> {
 	
 	private Scanner scanner;
 
-	public FileGraphStrategy(Scanner scanner){
-			//scanner = new Scanner(new File(file));	
+	/**
+	 * Functions that creates a new scanner to read a file.
+	 * 
+	 * @param scanner Scanner object that reads the file.
+	 */
+	public FileGraphStrategy(Scanner scanner) {
+		//scanner = new Scanner(new File(file));	
 		this.scanner = scanner;
 	}
 
+	/**
+	 * Function that creates a graph with the information read from the file.
+	 * 
+	 * @param vertices Number of vertices of the graph.
+	 * @return Graph created.
+	 */
 	@Override
 	public MapWeightedGraph<Integer,Integer> create(int vertices) { // throws NumberFormatxception
 		MapWeightedGraph<Integer,Integer> graph = new IntMapWeightedGraph();

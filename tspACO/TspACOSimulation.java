@@ -7,7 +7,7 @@ import graph.WeightedGraph;
 import sed.ISimulator;
 import sed.Simulator;
 
-
+//SO PARA DEBUG------------------------------------------------------------------
 
 /**
  * Simulator for ACO in a weighted graph<p>

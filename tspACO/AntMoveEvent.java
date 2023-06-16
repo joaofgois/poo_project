@@ -10,8 +10,9 @@ import expRandom.ExtRandom;
 import sed.*;
 
 /**
- * Event that moves the ant from node to node.<p>
- * <strong>T</strong> is the data type for the graph vertices labels.
+ * Class that implements the event of an ant moving to the next location.
+ * 
+ * @author Hugo Brites, Miguel Tavares e João Góis.
  */
 public class AntMoveEvent<T> extends Event{
 
@@ -25,7 +26,16 @@ public class AntMoveEvent<T> extends Event{
     private ISimulator simulator;
 
 
-    //constructor
+    /**
+     * Function that creates a new AntMoveEvent.
+     * 
+     * @param time time of the event
+     * @param simulator simulator where the event will be simulated
+     * @param antcolony antcolony where the event will be simulated
+     * @param antId id of the ant that will move
+     * @param antNext next location of the ant
+     * @param parameters parameters of the simulation
+     */
     public AntMoveEvent(float time, ISimulator simulator, IAntColony<T> antcolony, int antId, T antNext, Parameters<T,Integer> parameters){
         super(time);
         rand = ExtRandom.getInstance();
@@ -106,6 +116,11 @@ public class AntMoveEvent<T> extends Event{
 
     }
 
+    /**
+     * Function that checks if the Hamilton Cycle is complete.
+     * 
+     * @return true if the Hamilton Cycle is complete, false otherwise
+     */
     private boolean checkHamiltonCycle(){
         if (antcolony.getAntPosition(antId) == antcolony.colonyNest() && antcolony.getAntPath(antId).size() > parameters.graph.nrVertices()-1){
             return true;
@@ -113,6 +128,11 @@ public class AntMoveEvent<T> extends Event{
         return false;
     }
 
+    /**
+     * Function that chooses the next location of the ant.
+     * 
+     * @return next location of the ant
+     */
     private T nextAntMove(){
     	float[] probabilityMoves;
     	List<T> possible = new ArrayList<T>();
@@ -163,6 +183,12 @@ public class AntMoveEvent<T> extends Event{
         return possible.get(index);
     }
 
+    /**
+     * Function that calculates the probability of the ant moving to a certain location.
+     * 
+     * @param v2 location to move to
+     * @return probability of moving to location v2
+     */
     private float calculateProb(T v2){
        
        return (parameters.alpha+ antcolony.getPheromone(antcolony.getAntPosition(antId),v2) )/(parameters.beta + parameters.graph.getEdgeWeight(antcolony.getAntPosition(antId) ,v2));
@@ -170,8 +196,5 @@ public class AntMoveEvent<T> extends Event{
 
 }
 
-// 1-localizacao 2-ver adjacentes 3- ver se sao nao visitados um a um 4a)- se sim calcular logo a Probabilidade e meter na string
-// 4b) ignorar 5-se a string estiver fazia pegar em todos os adjacentes e escolher um random
-// 6- escolheu guardar na variavel antNext, calcular a duracao da viagem com o expRandom e enviar para a PEC
 
 

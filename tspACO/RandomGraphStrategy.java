@@ -7,15 +7,30 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Collections;
 
+/**
+ * This c
+ * 
+ * @author Hugo Brites, Miguel Tavares e João Góis.
+ */
 public class RandomGraphStrategy implements CreateGraphStrategy<Integer, Integer> {
 	private Random random;
 	private int maxWeight;
 	
+	/**
+	 * Creates a new RandomGraphStrategy object.
+	 * 
+	 * @param maxWeight The maximum weight of the edges.
+	 */
 	public RandomGraphStrategy(int maxWeight) {
 		random = new Random();
 		this.maxWeight = maxWeight;
 	}
 
+	/**
+	 * Creates a new RandomGraphStrategy object.
+	 * 
+	 * @param vertices The number of vertices of the graph.
+	 */
 	@Override
 	public MapWeightedGraph<Integer,Integer> create(int vertices) {
 		MapWeightedGraph<Integer,Integer> graph = new IntMapWeightedGraph();

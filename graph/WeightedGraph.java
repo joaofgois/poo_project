@@ -37,11 +37,34 @@ public interface WeightedGraph<V, E> {
 	 */
 	public void addVertex(V v1);
 	
+	/**
+	 * GEts adjancent vertices.
+	 * 
+	 * @param v1 - vertez to get adjacent vertices from.
+	 * 
+	 * @return set of adjacent vertices.
+	 */
 	public Set<V> getAdjacency(V vertex);
 	
+	/**
+	 * Gets the weight of the edge connecting two vertices.
+	 * 
+	 * @param v1 - first vertex.
+	 * @param v2 - second vertex.
+	 * 
+	 * @return weight of the edge connecting the two vertices.
+	 */
 	public E getEdgeWeight(V t, V t2);
 	
+	/**
+	 * Gets the number of vertices in the graph.
+	 * 
+	 * @return number of vertices in the graph.
+	 */
 	public int nrVertices();
 	
+	/**
+	 * Prints the graph.
+	 */
 	public void printGraph();
 }
