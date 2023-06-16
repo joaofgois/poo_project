@@ -37,7 +37,7 @@ public class UpdateEvent<T> extends Event {
 	@Override
 	protected void simulateEvent() {
 		System.out.println("Observation " + number + ":");
-		System.out.printf("%-10s%-30s  %f\n", " ", "Present instant", time);
+		System.out.printf("%-10s%-30s  %f\n", " ", "Present instant:", time);
 		System.out.printf("%-10s%-30s  %d\n", " ", "Number of move events:", parameters.nrAntMoveEvents);
 		System.out.printf("%-10s%-30s  %d\n", " ", "Number of evaporation events:", parameters.nrPheroEvents);
 		// Print (up to 5) best candidate cycles:
