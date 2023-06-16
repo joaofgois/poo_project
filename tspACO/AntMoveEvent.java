@@ -43,8 +43,8 @@ public class AntMoveEvent<T> extends Event{
      */
     @Override
     public void simulateEvent() {
-        //parent.AntMoveEvCounter ++
-
+        //mevent ++
+        parameters.nrAntMoveEvents += 1;
 
         //move to next location
         antcolony.addAntPath(antId, antNext);

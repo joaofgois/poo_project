@@ -49,7 +49,7 @@ public class main_test {
 		//System.out.println(rand.chooseRand(nodes));
 		
 		
-		IAntColony<Integer> antcolony = new AntColony<Integer>(0);
+		IAntColony<Integer> antcolony = new AntColony<Integer>(1);
 		System.out.println("Colony nest: " + antcolony.colonyNest());
 		
 		antcolony.addAnt(0);
@@ -67,16 +67,18 @@ public class main_test {
         parameters.eta = (float)10.0;
         parameters.rho = (float)0.5;
         parameters.miu = 10;
-		Event ev1 = new AntMoveEvent<Integer>(0, simulator, antcolony, 0, 0, parameters );
-		Event ev2 = new AntMoveEvent<Integer>(0, simulator, antcolony, 1, 0, parameters);
+		Event ev1 = new AntMoveEvent<Integer>(2, simulator, antcolony, 0, 1, parameters );
+		Event ev2 = new AntMoveEvent<Integer>(0, simulator, antcolony, 1, 1, parameters);
+        Event ev7 = new UpdateEvent<Integer>(0, simulator, parameters);
 		//antcolony.setPheromone(1, 0, 2);
 		//Event ev2 = new PheroEvent<Integer>(3, parent.simulator, antcolony, parent, 0, 1);
 
-		simulator.addEvPEC(ev1);
-		simulator.addEvPEC(ev2);
-		simulator.simulate();
+        simulator.addEvPEC(ev1);
+        simulator.addEvPEC(ev2);
+        simulator.addEvPEC(ev7);
+		//simulator.simulate();
 		//System.out.println("--" + parent.hamiCycles.get(0));
-		parameters.printCycles();
+		//parameters.printCycles();
 		
 		/*
 		ArrayList<Integer> list = new ArrayList<Integer>();

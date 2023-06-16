@@ -3,21 +3,20 @@ package antColony;
 import java.util.LinkedList;
 
 /**
- * @param position
- * @param LinkedList
+ * This Class ...Aqui guardamos a posicao atual e o path ate ao momento de determinada formiga
  * 
- * Aqui guardamos a posicao atual e o path ate ao momento de determinada formiga
+ * @author Hugo Brites, Miguel Tavares e João Góis.
+ * 
  */
 public class Ant<T> {
     protected T position;
     protected LinkedList<T> path;
 
     /**
-     * @param postion redefine a posicao da formiga 
+     * Sets the position of the ant. 
      * 
-     * funcao que redefine a posicao da formiga e adiciona a edge ao path feito ate ao momento
+     * @param position - the position of the ant
      */
-
     public Ant(T position){
         this.position = position;
         this.path = new LinkedList<T>();

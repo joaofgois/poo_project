@@ -16,6 +16,8 @@ public class Parameters<T,E> {
 
     public Parameters() {
     	this.hamiCycles = new ArrayList<>();
+        this.nrAntMoveEvents = 0;
+        this.nrPheroEvents = 0;
     }
     
     public void storeCycle(ArrayList<T> cycle, int cycle_weight){
@@ -36,6 +38,7 @@ public class Parameters<T,E> {
         
         
     }
+    /*
     //FOR DEBUG ONLY---------------------------------------
     public void printCycles() {
     	if (hamiCycles.size() > 0) {
@@ -45,5 +48,6 @@ public class Parameters<T,E> {
     		System.out.println("  " + hamiCycles.get(i));
     	}
     }
+    */
     
 }

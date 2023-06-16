@@ -15,21 +15,24 @@ public class FileGraphStrategy implements CreateGraphStrategy<Integer,Integer> {
 
 	@Override
 	public MapWeightedGraph<Integer,Integer> create(int vertices) { // throws NumberFormatxception
-		MapWeightedGraph<Integer,Integer> graph = new IntMapWeightedGraph(vertices);
+		MapWeightedGraph<Integer,Integer> graph = new IntMapWeightedGraph();
+		for (int i = 0; i < vertices; i++) {
+			graph.addVertex(i+1);
+		}
 		int weight;
 		String str;
 		for (int i = 0; i < vertices; i++) {
 			for (int j = 0; j < vertices; j++) {
 				try {
 					str = scanner.next();
-					System.out.println(str); //para tirar
+					//System.out.println(str); //para tirar
 					weight = Integer.parseInt(str);
 				} catch (NumberFormatException e){
 					System.out.println("Input file contains non integer token\n");
 					return null;
 				}
 				if (weight != 0) {
-					graph.addEdge(i, j, weight);					
+					graph.addEdge(i+1, j+1, weight);					
 				}
 			}
 		}

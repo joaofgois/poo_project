@@ -1,8 +1,0 @@
-/**
- * 
- */
-/**
- * @author Acer
- *
- */
-package antColony;

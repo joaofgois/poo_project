@@ -37,6 +37,8 @@ public class PheroEvent<T> extends Event{
 
     @Override
     protected void simulateEvent() {
+        //eevents ++
+        parameters.nrPheroEvents += 1;
         
         if (antcolony.setPheromone(v1, v2, -1*parameters.rho) != 0) {
         	this.time += rand.nextExp(parameters.eta);

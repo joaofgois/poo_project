@@ -7,7 +7,11 @@ import java.util.TreeSet;
 class EventComparator implements Comparator<Event> {
     @Override
     public int compare(Event event1, Event event2) {
-        return Float.compare(event1.getTimeStamp(), event2.getTimeStamp());
+    	int i = Float.compare(event1.getTimeStamp(), event2.getTimeStamp());
+        if (i == 0) {
+        	i = -1;
+        }
+        return i;
     }
 }
 

@@ -28,7 +28,7 @@ public class Simulator implements ISimulator {
     			return;
     		}
 		}
-        while(currentTime < simulationTime){
+        while(currentTime <= simulationTime){
         	currentEvent.simulateEvent();
             
             currentEvent = pec.nextEvPEC();

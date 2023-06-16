@@ -18,21 +18,22 @@ public class RandomGraphStrategy implements CreateGraphStrategy<Integer, Integer
 
 	@Override
 	public MapWeightedGraph<Integer,Integer> create(int vertices) {
-		MapWeightedGraph<Integer,Integer> graph = new IntMapWeightedGraph(vertices);
-		//int temp = ((vertices*(vertices-1))/2) - vertices + 1;
+		MapWeightedGraph<Integer,Integer> graph = new IntMapWeightedGraph();
+		for (int i = 0; i < vertices; i++) {
+			graph.addVertex(i+1);
+		}
+		
 		int nrEdges = random.nextInt( ((vertices*(vertices-1))/2) - vertices + 1);
-		System.out.println(nrEdges);
 		int v1;
 		int v2;
 		
 		//generate possible vertices
 		List<Integer> cycle = new ArrayList<Integer>(vertices);
 		for (int i = 0; i < vertices; i++) {
-			cycle.add(i);
+			cycle.add(i+1);
 		}
 		//generate Hamilton cycle
 		Collections.shuffle(cycle);
-		System.out.println(cycle);
 		for(int i = 0; i < vertices-1; i++) {
 			graph.addEdge(cycle.get(i), cycle.get(i+1), random.nextInt(maxWeight) + 1);
 		}
@@ -40,8 +41,8 @@ public class RandomGraphStrategy implements CreateGraphStrategy<Integer, Integer
 		
 		//create more random edges
 		while(nrEdges != 0) {
-			v1 = random.nextInt(vertices);
-			v2 = random.nextInt(vertices);
+			v1 = random.nextInt(vertices) + 1;
+			v2 = random.nextInt(vertices) + 1;
 			if (v1 != v2) {
 				if (! graph.areAdjacent(v1, v2)) {
 					graph.addEdge(v1, v2, random.nextInt(maxWeight) + 1);

@@ -3,20 +3,16 @@ package tspACO;
 import sed.*;
 import graph.*;
 import antColony.*;
-import expRandom.*;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.PriorityQueue;
 import java.util.Scanner;
 
 public class TSP {
 
-    protected static int nrPheroEvents, nrAntMoveEvents;
+	protected static int maxWeight;
     protected static int antColonySize, colonyNest;
     protected static float finalInstant;
-    protected static float graphWeight; // falta isto
     protected static ISimulator simulator;
     protected static Parameters<Integer,Integer> parameters;
 
@@ -35,6 +31,7 @@ public class TSP {
                 if (args[0].equals("-r")) {
                     try {
                         inputVertices = Integer.parseInt(args[1]);
+                        maxWeight = Integer.parseInt(args[1]);
                         colonyNest = Integer.parseInt(args[3]);
                         parameters.alpha = Float.parseFloat(args[4]);
                         parameters.beta = Float.parseFloat(args[5]);
@@ -50,7 +47,7 @@ public class TSP {
                     }
                     //Create Strategy to Create Graph
                     CreateGraphStrategy<Integer, Integer> generate;
-                    generate = new RandomGraphStrategy(inputVertices);
+                    generate = new RandomGraphStrategy(maxWeight);
                     context.setStrategy(generate);
 
                 } else {
@@ -105,6 +102,7 @@ public class TSP {
 
         simulator = new Simulator(finalInstant);
         parameters.graph = context.createGraph(inputVertices);
+        parameters.miu = calculateGraphWeight();
 
         // Create the ant colony and the antMoveEvent
         antColony = new AntColony<>(colonyNest);
@@ -116,8 +114,19 @@ public class TSP {
         // Iniciate the simulator
         simulator.addEvPEC(new UpdateEvent<Integer>(0, simulator, parameters));
         simulator.simulate();
-
+        //parameters.printCycles();
 
         System.exit(0);
+    }
+    
+    private static int calculateGraphWeight() {
+    	int sum = 0;
+    	for(int i=0; i<parameters.graph.nrVertices(); i++) {
+    		for(int j=0; j<parameters.graph.nrVertices(); j++) {
+    			sum += parameters.graph.getEdgeWeight(i, j);
+    		}
+    	}
+		return sum;
+    	
     }
 }
