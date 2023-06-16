@@ -4,9 +4,9 @@ import java.util.Random;
 
 //Thread Safe Singleton
 /**
- *  Random number generator using with a Thread Safe Singleton pattern.
+ *  Random number generator using a Thread Safe Singleton pattern.
  * <p>
- * Must be initialized with the <strong>getInstance()</strong> method wich replaces the Constructor.
+ * Must be initialized with <strong>ExtRandom.getInstance()</strong> wich replaces the Constructor.
  */
 public class ExtRandom extends Random{
 	/**
@@ -17,7 +17,7 @@ public class ExtRandom extends Random{
 	//private Random random;
 	
 	private ExtRandom() {
-		//random = new Random();
+		super();
 	}
 	
 	/**
@@ -33,7 +33,6 @@ public class ExtRandom extends Random{
 
 	public double nextExp(double m) {
 		return  -m*Math.log(1.0-this.nextDouble());
-
 	}
 
 	/**

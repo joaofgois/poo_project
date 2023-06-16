@@ -89,7 +89,6 @@ public class AntMoveEvent<T> extends Event{
             // reset formiga
             
             antcolony.resetAnt(antId);
-            antcolony.addAntPath(antId, antcolony.getAntPosition(antId));
         }
     
         //choose next location

@@ -47,20 +47,20 @@ public class UpdateEvent<T> extends Event {
 				System.out.printf("%-10s%-30s  %s\n", " ", " ", parameters.hamiCycles.get(i));
 			}
 		} else {
-			System.out.printf("%-10s%-30s\n", " ", "Top candidate cycles:");
+			System.out.printf("%-10s%-30s  {}\n", " ", "Top candidate cycles:");
 		}
 		//print best hamilton cycle
 		if (parameters.hamiCycles.size() > 0) {
 			System.out.printf("%-10s%-30s  %s\n", " ", "Best Hamilton Cycle:", parameters.hamiCycles.get(0));
 		}
 		else {
-			System.out.printf("%-10s%-30s\n", " ", "Best Hamilton Cycle:");
+			System.out.printf("%-10s%-30s  {}\n", " ", "Best Hamilton Cycle:");
 		}
 		System.out.println();
 		
 		number += 1;
 		time += simulator.getSimTime() / 20;
-		if (time < simulator.getSimTime()) {
+		if (time <= simulator.getSimTime()) {
 			simulator.addEvPEC(this);
 		}
 	}

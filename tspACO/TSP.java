@@ -37,14 +37,14 @@ public class TSP {
 
         int inputVertices = 0;
 
-        System.out.println(args.length);
+        //System.out.println(args.length);
         switch (args.length) {
             // Input from terminal without file.
             case 12:
                 if (args[0].equals("-r")) {
                     try {
                         inputVertices = Integer.parseInt(args[1]);
-                        maxWeight = Integer.parseInt(args[1]);
+                        maxWeight = Integer.parseInt(args[2]);
                         colonyNest = Integer.parseInt(args[3]);
                         parameters.alpha = Float.parseFloat(args[4]);
                         parameters.beta = Float.parseFloat(args[5]);
@@ -115,6 +115,10 @@ public class TSP {
 
         simulator = new Simulator(finalInstant);
         parameters.graph = context.createGraph(inputVertices);
+        if (parameters.graph == null) {
+            System.out.println("Bad input parameters.");
+            System.exit(1);
+        }
         parameters.miu = calculateGraphWeight();
 
         // Create the ant colony and the antMoveEvent

@@ -35,7 +35,7 @@ public class Edge<T> {
 	}
 
 	/**
-	 * Function that returns a bollian value that indicates if the object is an edge.
+	 * Function that returns a boolean value that indicates if the object is an edge.
 	 * 
 	 * @return the first vertex of the edge.
 	 */
@@ -48,6 +48,8 @@ public class Edge<T> {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
+		//the following line results in the warning: "Type safety: Unchecked cast from Object to Edge<T>"
+		//however the Object obj type is verified in the lines above so we suppressed it
 		Edge<T> other = (Edge<T>) obj;
 		return (Objects.equals(v1, other.v1) && Objects.equals(v2, other.v2)
 				|| Objects.equals(v1, other.v2) && Objects.equals(v1, other.v2));

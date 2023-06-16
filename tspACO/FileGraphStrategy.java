@@ -44,7 +44,7 @@ public class FileGraphStrategy implements CreateGraphStrategy<Integer,Integer> {
 					//System.out.println(str); //para tirar
 					weight = Integer.parseInt(str);
 				} catch (NumberFormatException e){
-					System.out.println("Input file contains non integer token\n");
+					System.out.println("Input file contains has wrong formatting\n");
 					return null;
 				}
 				if (weight != 0) {
