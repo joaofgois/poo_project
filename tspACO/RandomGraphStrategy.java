@@ -38,6 +38,9 @@ public class RandomGraphStrategy implements CreateGraphStrategy<Integer, Integer
 			graph.addVertex(i+1);
 		}
 		
+		if (vertices < 2) {
+			return null;
+		}
 		int nrEdges = random.nextInt( ((vertices*(vertices-1))/2) - vertices + 1);
 		int v1;
 		int v2;

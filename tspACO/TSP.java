@@ -156,7 +156,7 @@ public class TSP {
     }
     
     /**
-     * Prints the initial conditions of the simulation.
+     * Prints the initial conditions of the simulation. 
      */
     public static void printInitialConditions() {
     	System.out.println("Input parameters:");
